@@ -1,17 +1,17 @@
 package common
 
 import (
-	"github.com/ethereum/go-ethereum/common"
+  "github.com/ethereum/go-ethereum/common"
 )
 
 type Address struct {
-	address common.Address
+  address common.Address
 }
 
 type Hash struct {
-	hash common.Hash
+  hash common.Hash
 }
 
 func (a Address) Hex() string {
-	return a.address.Hex()
+  return a.address.Hex()
 }
