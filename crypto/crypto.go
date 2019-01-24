@@ -9,6 +9,7 @@ import (
 	"crypto/ecdsa"
 
 	"github.com/astra-x/go-ethereum/crypto"
+	"github.com/bcl-chain/web3.go/common"
 )
 
 type PublicKey struct {
@@ -46,7 +47,7 @@ func FromECDSAPub(pub *PublicKey) []byte {
 	return crypto.FromECDSAPub(publicKey)
 }
 
-func PubkeyToAddress(pub *PublicKey) []byte {
+func PubkeyToAddress(pub *PublicKey) *common.Address {
 	pubBytes := FromECDSAPub(pub)
-	return crypto.Keccak256(pubBytes[1:])[12:]
+	return common.BytesToAddress(crypto.Keccak256(pubBytes[1:])[12:])
 }

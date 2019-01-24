@@ -23,4 +23,5 @@ func main() {
 	// 3. get address from public key
 	address := crypto.PubkeyToAddress(pub)
 	log.Println(address)
+	log.Println(address.Hex())
 }

@@ -1,17 +1,24 @@
 package common
 
 import (
-  "github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 type Address struct {
-  address common.Address
+	address interface{}
 }
 
 type Hash struct {
-  hash common.Hash
+	hash interface{}
 }
 
-func (a Address) Hex() string {
-  return a.address.Hex()
+func BytesToAddress(b []byte) *Address {
+	return &Address{
+		address: common.BytesToAddress(b),
+	}
+}
+
+func (a *Address) Hex() string {
+	address, _ := a.address.(common.Address)
+	return address.Hex()
 }
