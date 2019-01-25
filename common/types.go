@@ -1,8 +1,6 @@
 package common
 
 import (
-//  "github.com/bcl-chain/web3.go/wrapper"
-
   "github.com/ethereum/go-ethereum/common"
 )
 

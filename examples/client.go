@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/bcl-chain/web3.go/ethclient"
-	"log"
+  "log"
+
+  "github.com/bcl-chain/web3.go/ethclient"
 )
 
 func main() {
