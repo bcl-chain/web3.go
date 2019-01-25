@@ -5,13 +5,28 @@ import (
 )
 
 type Address struct {
-  address common.Address
+	Address interface{}
 }
 
 type Hash struct {
-  hash common.Hash
+	Hash interface{}
 }
 
-func (a Address) Hex() string {
-  return a.address.Hex()
+func BytesToAddress(b []byte) *Address {
+  address := common.BytesToAddress(b)
+  return &Address{
+    Address: address,
+  }
+}
+
+func (a *Address) Hex() string {
+  address, _ := a.Address.(common.Address)
+  return address.Hex()
+}
+
+func HexToAddress(s string) *Address {
+  address := common.HexToAddress(s)
+  return &Address{
+    Address: address,
+  }
 }
