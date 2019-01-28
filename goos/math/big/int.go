@@ -13,3 +13,8 @@ func NewInt(x int64) *Int {
     Int: big.NewInt(x),
   }
 }
+
+func (wx *Int) Int64() int64 {
+  x, _ := wx.Int.(*big.Int)
+  return x.Int64()
+}
