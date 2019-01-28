@@ -4,12 +4,21 @@ import (
   "github.com/ethereum/go-ethereum/common"
 )
 
-type Address struct {
-	Address interface{}
-}
+/////////// Hash
 
 type Hash struct {
 	Hash interface{}
+}
+
+func (h Hash) Hex() string{
+  hash, _ := h.Hash.(common.Hash)
+  return hash.Hex()
+}
+
+/////////// Address
+
+type Address struct {
+  Address interface{}
 }
 
 func BytesToAddress(b []byte) *Address {
