@@ -1,11 +1,11 @@
 package main
 
-import(
+import (
 	"fmt"
 	"log"
 
-	"github.com/bcl-chain/web3.go/core/types"
 	"github.com/bcl-chain/web3.go/common"
+	"github.com/bcl-chain/web3.go/core/types"
 	"github.com/bcl-chain/web3.go/ethclient"
 	"github.com/bcl-chain/web3.go/goos/context"
 	"github.com/bcl-chain/web3.go/goos/math/big"
@@ -26,13 +26,13 @@ func main() {
 	// TODO: cannnot range over wrapped Transactions
 	for i := 0; i < block.Transactions().Len(); i++ {
 		tx := block.Transactions().Get(i)
-		fmt.Println(tx.Hash().Hex()) //
-		fmt.Println(tx.Value().String()) //
-		fmt.Println(tx.Gas()) //
+		fmt.Println(tx.Hash().Hex())       //
+		fmt.Println(tx.Value().String())   //
+		fmt.Println(tx.Gas())              //
 		fmt.Println(tx.GasPrice().Int64()) //
-		fmt.Println(tx.Nonce()) //
-		fmt.Println(tx.Data()) //
-		fmt.Println(tx.To().Hex()) //
+		fmt.Println(tx.Nonce())            //
+		fmt.Println(tx.Data())             //
+		fmt.Println(tx.To().Hex())         //
 
 		if msg, err := tx.AsMessage(types.NewHomesteadSigner()); err != nil {
 			fmt.Println(msg.From().Hex()) //
@@ -68,5 +68,5 @@ func main() {
 	}
 
 	fmt.Println(tx.Hash().Hex()) //
-	fmt.Println(isPending) //
+	fmt.Println(isPending)       //
 }

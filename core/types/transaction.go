@@ -10,7 +10,7 @@ import (
 )
 
 type Transaction struct {
-  Transaction interface{}
+	Transaction interface{}
 }
 
 func NewTransaction(nonce int64, wto *common.Address, wamount *big.Int, gasLimit int64, wgasPrice *big.Int, data []byte) *Transaction {
@@ -20,54 +20,54 @@ func NewTransaction(nonce int64, wto *common.Address, wamount *big.Int, gasLimit
 
 	return &Transaction{
 		Transaction: types.NewTransaction(uint64(nonce), to, amount, uint64(gasLimit), gasPrice, data),
-  }
+	}
 }
 
 func (wtx *Transaction) Data() []byte {
-  tx, _ := wtx.Transaction.(*types.Transaction)
-  return tx.Data()
+	tx, _ := wtx.Transaction.(*types.Transaction)
+	return tx.Data()
 }
 
 func (wtx *Transaction) Gas() int64 {
-  tx, _ := wtx.Transaction.(*types.Transaction)
+	tx, _ := wtx.Transaction.(*types.Transaction)
 	return int64(tx.Gas())
 }
 
 func (wtx *Transaction) GasPrice() *big.Int {
-  tx, _ := wtx.Transaction.(*types.Transaction)
+	tx, _ := wtx.Transaction.(*types.Transaction)
 	return &big.Int{
 		Int: tx.GasPrice(),
 	}
 }
 
 func (wtx *Transaction) Value() *big.Int {
-  tx, _ := wtx.Transaction.(*types.Transaction)
-  return &big.Int{
-    Int: tx.Value(),
-  }
+	tx, _ := wtx.Transaction.(*types.Transaction)
+	return &big.Int{
+		Int: tx.Value(),
+	}
 }
 
 func (wtx *Transaction) Nonce() int64 {
-  tx, _ := wtx.Transaction.(*types.Transaction)
-  return int64(tx.Nonce())
+	tx, _ := wtx.Transaction.(*types.Transaction)
+	return int64(tx.Nonce())
 }
 
 func (wtx *Transaction) To() *common.Address {
-  tx, _ := wtx.Transaction.(*types.Transaction)
-  return &common.Address{
-    Address: *tx.To(),
-  }
+	tx, _ := wtx.Transaction.(*types.Transaction)
+	return &common.Address{
+		Address: *tx.To(),
+	}
 }
 
 func (wtx *Transaction) Hash() *common.Hash {
-  tx, _ := wtx.Transaction.(*types.Transaction)
-  return &common.Hash{
-    Hash: tx.Hash(),
-  }
+	tx, _ := wtx.Transaction.(*types.Transaction)
+	return &common.Hash{
+		Hash: tx.Hash(),
+	}
 }
 
 func (wtx *Transaction) AsMessage(ws *Signer) (*Message, error) {
-  tx, _ := wtx.Transaction.(*types.Transaction)
+	tx, _ := wtx.Transaction.(*types.Transaction)
 	s, _ := ws.Signer.(types.Signer)
 	msg, err := tx.AsMessage(s)
 	return &Message{
@@ -84,8 +84,8 @@ func (ws Transactions) Len() int {
 	return s.Len()
 }
 
-// function not in geth, added by K 
-func (ws Transactions) Get(i int)  *Transaction {
+// function not in geth, added by K
+func (ws Transactions) Get(i int) *Transaction {
 	s, _ := ws.Transactions.(types.Transactions)
 	return &Transaction{
 		Transaction: s[i],
@@ -97,16 +97,15 @@ type Message struct {
 }
 
 func (wm Message) From() *common.Address {
-  m, _ := wm.Message.(types.Message)
-  return &common.Address{
-    Address: m.From(),
-  }
+	m, _ := wm.Message.(types.Message)
+	return &common.Address{
+		Address: m.From(),
+	}
 }
 
 func (wm Message) To() *common.Address {
-  m, _ := wm.Message.(types.Message)
-  return &common.Address{
-    Address: *m.To(),
-  }
+	m, _ := wm.Message.(types.Message)
+	return &common.Address{
+		Address: *m.To(),
+	}
 }
-

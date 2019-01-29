@@ -12,7 +12,7 @@ func SignTx(wtx *Transaction, ws *Signer, wprv *crypto.PrivateKey) (*Transaction
 	s, _ := ws.Signer.(types.Signer)
 	prv := wcrypto.ToPrivateKey(wprv)
 
-  if tx, err := types.SignTx(tx, s, prv); err == nil {
+	if tx, err := types.SignTx(tx, s, prv); err == nil {
 		return &Transaction{
 			Transaction: tx,
 		}, nil
@@ -26,7 +26,7 @@ type Signer struct {
 }
 
 type HomesteadSigner struct {
-  HomesteadSigner interface{}
+	HomesteadSigner interface{}
 }
 
 func NewHomesteadSigner() *Signer {

@@ -2,11 +2,11 @@ package main
 
 import (
 	"github.com/bcl-chain/web3.go/goos/context"
-//	"github.com/bcl-chain/web3.go/crypto/ecdsa"
+	//	"github.com/bcl-chain/web3.go/crypto/ecdsa"
 	"fmt"
 	"github.com/bcl-chain/web3.go/common"
-	"log"
 	"github.com/bcl-chain/web3.go/goos/math/big"
+	"log"
 
 	"github.com/bcl-chain/web3.go/core/types"
 	"github.com/bcl-chain/web3.go/crypto"
@@ -23,10 +23,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%#v\n",privateKey)
+	fmt.Printf("%#v\n", privateKey)
 
 	publicKey := privateKey.Public()
-//	log.Fatal("error casting public key to ECDSA")
+	//	log.Fatal("error casting public key to ECDSA")
 
 	fromAddress := crypto.PubkeyToAddress(publicKey)
 	fmt.Println(fromAddress.Hex())
@@ -36,7 +36,7 @@ func main() {
 	}
 
 	value := big.NewInt(1000000000000000000) // in wei (1 eth)
-	gasLimit := int64(21000)                 // 
+	gasLimit := int64(21000)                 //
 	gasPrice := big.NewInt(30000000000)      // in wei (30 gwei)
 
 	toAddress := common.HexToAddress("0x0abb28e0270074d5552a66d5dd172fbcb9db4fd7")

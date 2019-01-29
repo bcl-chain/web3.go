@@ -8,29 +8,29 @@ package crypto
 import (
 	"crypto/ecdsa"
 
-	"github.com/astra-x/go-ethereum/crypto"
 	"github.com/bcl-chain/web3.go/common"
+	"github.com/ethereum/go-ethereum/crypto"
 )
 
 type PublicKey struct {
-	publicKey interface{}
+	PublicKey interface{}
 }
 
 type PrivateKey struct {
-	privateKey interface{}
+	PrivateKey interface{}
 }
 
 func (priv *PrivateKey) Public() *PublicKey {
-	privateKey, _ := priv.privateKey.(*ecdsa.PrivateKey)
+	privateKey, _ := priv.PrivateKey.(*ecdsa.PrivateKey)
 	return &PublicKey{
-		publicKey: &privateKey.PublicKey,
+		PublicKey: &privateKey.PublicKey,
 	}
 }
 
 func GenerateKey() (*PrivateKey, error) {
 	if privateKey, err := crypto.GenerateKey(); err == nil {
 		return &PrivateKey{
-			privateKey: privateKey,
+			PrivateKey: privateKey,
 		}, nil
 	} else {
 		return nil, err
@@ -38,13 +38,23 @@ func GenerateKey() (*PrivateKey, error) {
 }
 
 func FromECDSA(priv *PrivateKey) []byte {
-	privateKey, _ := priv.privateKey.(*ecdsa.PrivateKey)
+	privateKey, _ := priv.PrivateKey.(*ecdsa.PrivateKey)
 	return crypto.FromECDSA(privateKey)
 }
 
 func FromECDSAPub(pub *PublicKey) []byte {
-	publicKey, _ := pub.publicKey.(*ecdsa.PublicKey)
+	publicKey, _ := pub.PublicKey.(*ecdsa.PublicKey)
 	return crypto.FromECDSAPub(publicKey)
+}
+
+func HexToECDSA(hexkey string) (*PrivateKey, error) {
+	if privateKey, err := crypto.HexToECDSA(hexkey); err == nil {
+		return &PrivateKey{
+			PrivateKey: privateKey,
+		}, nil
+	} else {
+		return nil, err
+	}
 }
 
 func PubkeyToAddress(pub *PublicKey) *common.Address {

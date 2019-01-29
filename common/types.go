@@ -7,7 +7,7 @@ import (
 /////////// Hash
 
 type Hash struct {
-  Hash interface{}
+	Hash interface{}
 }
 
 func HexToHash(s string) *Hash {
@@ -17,32 +17,31 @@ func HexToHash(s string) *Hash {
 }
 
 func (wh Hash) Hex() string {
-  h, _ := wh.Hash.(common.Hash)
-  return h.Hex()
+	h, _ := wh.Hash.(common.Hash)
+	return h.Hex()
 }
 
 /////////// Address
 
 type Address struct {
-  Address interface{}
+	Address interface{}
 }
 
 func BytesToAddress(b []byte) *Address {
-  a := common.BytesToAddress(b)
-  return &Address{
-    Address: a,
-  }
+	a := common.BytesToAddress(b)
+	return &Address{
+		Address: a,
+	}
 }
 
 func (wa *Address) Hex() string {
-  a, _ := wa.Address.(common.Address)
+	a, _ := wa.Address.(common.Address)
 	return a.Hex()
 }
 
 func HexToAddress(s string) *Address {
-  a := common.HexToAddress(s)
-  return &Address{
-    Address: a,
-  }
+	a := common.HexToAddress(s)
+	return &Address{
+		Address: a,
+	}
 }
-

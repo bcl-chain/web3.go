@@ -27,4 +27,3 @@ func ToReceipt(wReceipt *wtypes.Receipt) *types.Receipt {
 		return nil
 	}
 }
-
