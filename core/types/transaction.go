@@ -5,10 +5,22 @@ import (
 
 	"github.com/bcl-chain/web3.go/common"
 	"github.com/bcl-chain/web3.go/goos/math/big"
+	wcommon "github.com/bcl-chain/web3.go/wrapper/common"
+	wbig "github.com/bcl-chain/web3.go/wrapper/goos/math/big"
 )
 
 type Transaction struct {
   Transaction interface{}
+}
+
+func NewTransaction(nonce int64, wto *common.Address, wamount *big.Int, gasLimit int64, wgasPrice *big.Int, data []byte) *Transaction {
+	to := wcommon.ToAddress(wto)
+	amount := wbig.ToBigInt(wamount)
+	gasPrice := wbig.ToBigInt(wgasPrice)
+
+	return &Transaction{
+		Transaction: types.NewTransaction(uint64(nonce), to, amount, uint64(gasLimit), gasPrice, data),
+  }
 }
 
 func (wtx *Transaction) Data() []byte {
