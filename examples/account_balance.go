@@ -1,7 +1,6 @@
 package main
 
 import (
-	//  "context"
 	"fmt"
 	"log"
 
@@ -25,7 +24,7 @@ func main() {
 
 	fmt.Println(balance)
 
-	blockNumber := big.NewInt(3)
+	blockNumber := big.NewInt(2500)
 	balanceAt, err := client.BalanceAt(context.Background(), account, blockNumber)
 	if err != nil {
 		log.Fatal(err)

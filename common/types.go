@@ -1,18 +1,24 @@
 package common
 
 import (
-  "github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 /////////// Hash
 
 type Hash struct {
-	Hash interface{}
+  Hash interface{}
 }
 
-func (h Hash) Hex() string{
-  hash, _ := h.Hash.(common.Hash)
-  return hash.Hex()
+func HexToHash(s string) *Hash {
+	return &Hash{
+		Hash: common.HexToHash(s),
+	}
+}
+
+func (wh Hash) Hex() string {
+  h, _ := wh.Hash.(common.Hash)
+  return h.Hex()
 }
 
 /////////// Address
@@ -22,20 +28,21 @@ type Address struct {
 }
 
 func BytesToAddress(b []byte) *Address {
-  address := common.BytesToAddress(b)
+  a := common.BytesToAddress(b)
   return &Address{
-    Address: address,
+    Address: a,
   }
 }
 
-func (a *Address) Hex() string {
-  address, _ := a.Address.(common.Address)
-  return address.Hex()
+func (wa *Address) Hex() string {
+  a, _ := wa.Address.(common.Address)
+	return a.Hex()
 }
 
 func HexToAddress(s string) *Address {
-  address := common.HexToAddress(s)
+  a := common.HexToAddress(s)
   return &Address{
-    Address: address,
+    Address: a,
   }
 }
+
