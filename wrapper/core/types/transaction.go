@@ -7,25 +7,25 @@ import (
 )
 
 func FromTransaction(transaction *types.Transaction) *wtypes.Transaction {
-  if transaction != nil {
-    return &wtypes.Transaction{
-      Transaction: transaction,
-    }
-  } else {
-    return nil
-  }
+	if transaction != nil {
+		return &wtypes.Transaction{
+			Transaction: transaction,
+		}
+	} else {
+		return nil
+	}
 }
 
 func ToTransaction(wTransaction *wtypes.Transaction) *types.Transaction {
-  if wTransaction != nil {
-    if transaction, ok := wTransaction.Transaction.(*types.Transaction); ok {
-      return transaction
-    } else {
-      return nil
-    }
-  } else {
-    return nil
-  }
+	if wTransaction != nil {
+		if transaction, ok := wTransaction.Transaction.(*types.Transaction); ok {
+			return transaction
+		} else {
+			return nil
+		}
+	} else {
+		return nil
+	}
 }
 
 func FromTransactions(transactions *types.Transactions) *wtypes.Transactions {
@@ -49,4 +49,3 @@ func ToTransactions(wTransactions *wtypes.Transactions) *types.Transactions {
 		return nil
 	}
 }
-
