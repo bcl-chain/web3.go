@@ -34,6 +34,18 @@ func BytesToAddress(b []byte) *Address {
 	}
 }
 
+func (wa *Address) Bytes() []byte {
+  a, _ := wa.Address.(common.Address)
+  return a.Bytes()
+}
+
+func (wa *Address) Hash() *Hash {
+  a, _ := wa.Address.(common.Address)
+  return &Hash{
+		Hash: a.Hash(),
+	}
+}
+
 func (wa *Address) Hex() string {
 	a, _ := wa.Address.(common.Address)
 	return a.Hex()
