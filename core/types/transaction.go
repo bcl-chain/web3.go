@@ -4,9 +4,9 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 
 	"github.com/bcl-chain/web3.go/common"
-	"github.com/bcl-chain/web3.go/goos/math/big"
+	"github.com/bcl-chain/web3.go/gos/math/big"
 	wcommon "github.com/bcl-chain/web3.go/wrapper/common"
-	wbig "github.com/bcl-chain/web3.go/wrapper/goos/math/big"
+	wbig "github.com/bcl-chain/web3.go/wrapper/gos/math/big"
 )
 
 type Transaction struct {
