@@ -4,7 +4,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 
 	"github.com/bcl-chain/web3.go/common"
-	"github.com/bcl-chain/web3.go/goos/math/big"
+	"github.com/bcl-chain/web3.go/gos/math/big"
 )
 
 type Header struct {

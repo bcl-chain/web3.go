@@ -3,7 +3,7 @@ package wrapper
 import (
 	"math/big"
 
-	wbig "github.com/bcl-chain/web3.go/goos/math/big"
+	wbig "github.com/bcl-chain/web3.go/gos/math/big"
 )
 
 func FromBigInt(bigInt *big.Int) *wbig.Int {

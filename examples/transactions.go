@@ -7,8 +7,8 @@ import (
 	"github.com/bcl-chain/web3.go/common"
 	"github.com/bcl-chain/web3.go/core/types"
 	"github.com/bcl-chain/web3.go/ethclient"
-	"github.com/bcl-chain/web3.go/goos/context"
-	"github.com/bcl-chain/web3.go/goos/math/big"
+	"github.com/bcl-chain/web3.go/gos/context"
+	"github.com/bcl-chain/web3.go/gos/math/big"
 )
 
 func main() {
