@@ -29,7 +29,6 @@ func main() {
 	//	log.Fatal("error casting public key to ECDSA")
 
 	fromAddress := crypto.PubkeyToAddress(publicKey)
-	fmt.Println(fromAddress.Hex())
 	nonce, err := client.PendingNonceAt(context.Background(), fromAddress)
 	if err != nil {
 		log.Fatal(err)

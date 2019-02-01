@@ -119,6 +119,20 @@ func (ec *Client) PendingNonceAt(wctx *context.Context, waccount *common.Address
 	return int64(result), err
 }
 
+func (ec *Client) SuggestGasPrice(wctx *context.Context) (*big.Int, error) {
+  c, _ := ec.c.(*ethclient.Client)
+  ctx := wcontext.ToContext(wctx)
+
+  if gasPrice, err := c.SuggestGasPrice(ctx); err == nil {
+		return &big.Int{
+			Int: gasPrice,
+		}, nil
+	} else {
+		return nil, err
+	}
+}
+
+
 func (ec *Client) SendTransaction(wctx *context.Context, wtx *types.Transaction) error {
 	c, _ := ec.c.(*ethclient.Client)
 	ctx := wcontext.ToContext(wctx)

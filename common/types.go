@@ -16,6 +16,11 @@ func HexToHash(s string) *Hash {
 	}
 }
 
+func (wh Hash) Bytes() []byte {
+  h, _ := wh.Hash.(common.Hash)
+  return h.Bytes()
+}
+
 func (wh Hash) Hex() string {
 	h, _ := wh.Hash.(common.Hash)
 	return h.Hex()

@@ -10,6 +10,7 @@ import (
 
 	"github.com/bcl-chain/web3.go/common"
 	"github.com/ethereum/go-ethereum/crypto"
+	wcommon "github.com/bcl-chain/web3.go/wrapper/common"
 )
 
 type PublicKey struct {
@@ -18,6 +19,10 @@ type PublicKey struct {
 
 type PrivateKey struct {
 	PrivateKey interface{}
+}
+
+func Keccak256Hash(data []byte) *common.Hash {
+	return wcommon.FromHash(crypto.Keccak256Hash(data))
 }
 
 func (priv *PrivateKey) Public() *PublicKey {

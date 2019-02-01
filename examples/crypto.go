@@ -2,7 +2,9 @@ package main
 
 import (
 	"log"
+	"fmt"
 
+	"github.com/bcl-chain/web3.go/common/hexutil"
 	"github.com/bcl-chain/web3.go/crypto"
 )
 
@@ -13,15 +15,15 @@ func main() {
 		log.Fatal(err)
 	}
 	privBytes := crypto.FromECDSA(priv)
-	log.Println(privBytes)
+	fmt.Println(hexutil.Encode(privBytes)[2:])
 
 	// 2. get public key from private key
 	pub := priv.Public()
 	pubBytes := crypto.FromECDSAPub(pub)
-	log.Println(pubBytes)
+	fmt.Println(hexutil.Encode(pubBytes)[4:])
 
 	// 3. get address from public key
 	address := crypto.PubkeyToAddress(pub)
-	log.Println(address)
-	log.Println(address.Hex())
+//	fmt.Println(address)
+	fmt.Println(address.Hex())
 }
