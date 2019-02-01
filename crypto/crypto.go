@@ -8,7 +8,6 @@ package crypto
 import (
 	"crypto/ecdsa"
 
-	"github.com/bcl-chain/web3.go/common"
 	obj "github.com/bcl-chain/web3.go/object"
 	"github.com/ethereum/go-ethereum/crypto"
 )
@@ -48,7 +47,7 @@ func HexToECDSA(hexkey string) (*PrivateKey, error) {
 	}
 }
 
-func PubkeyToAddress(pub *PublicKey) *common.Address {
+func PubkeyToAddress(pub *PublicKey) []byte {
 	pubBytes := FromECDSAPub(pub)
-	return common.BytesToAddress(crypto.Keccak256(pubBytes[1:])[12:])
+	return crypto.Keccak256(pubBytes[1:])[12:]
 }
