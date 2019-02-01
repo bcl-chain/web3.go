@@ -3,7 +3,7 @@ package wrapper
 import (
 	"context"
 
-	wcontext "github.com/bcl-chain/web3.go/goos/context"
+	wcontext "github.com/bcl-chain/web3.go/gos/context"
 )
 
 func FromContext(context context.Context) *wcontext.Context {

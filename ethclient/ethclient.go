@@ -5,12 +5,12 @@ import (
 
 	"github.com/bcl-chain/web3.go/common"
 	"github.com/bcl-chain/web3.go/core/types"
-	"github.com/bcl-chain/web3.go/goos/context"
-	"github.com/bcl-chain/web3.go/goos/math/big"
+	"github.com/bcl-chain/web3.go/gos/context"
+	"github.com/bcl-chain/web3.go/gos/math/big"
 	wcommon "github.com/bcl-chain/web3.go/wrapper/common"
 	wtypes "github.com/bcl-chain/web3.go/wrapper/core/types"
-	wcontext "github.com/bcl-chain/web3.go/wrapper/goos/context"
-	wbig "github.com/bcl-chain/web3.go/wrapper/goos/math/big"
+	wcontext "github.com/bcl-chain/web3.go/wrapper/gos/context"
+	wbig "github.com/bcl-chain/web3.go/wrapper/gos/math/big"
 )
 
 type Client struct {
