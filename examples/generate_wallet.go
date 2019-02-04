@@ -1,12 +1,10 @@
 package main
 
 import (
-	"log"
 	"fmt"
+	"log"
 
 	"github.com/bcl-chain/web3.go/api"
-//	"github.com/bcl-chain/web3.go/common/hexutil"
-//	"github.com/bcl-chain/web3.go/crypto"
 )
 
 func main() {
@@ -25,6 +23,6 @@ func main() {
 
 	// 3. get address from public key
 	address := api.PubkeyToAddress(pub)
-//	fmt.Println(address)
+	//	fmt.Println(address)
 	fmt.Println(address.Hex())
 }

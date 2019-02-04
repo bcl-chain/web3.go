@@ -5,10 +5,6 @@ import (
 	"log"
 
 	"github.com/bcl-chain/web3.go/api"
-//	"github.com/bcl-chain/web3.go/common"
-//	"github.com/bcl-chain/web3.go/ethclient"
-//	"github.com/bcl-chain/web3.go/gos/context"
-//	"github.com/bcl-chain/web3.go/gos/math/big"
 )
 
 func main() {

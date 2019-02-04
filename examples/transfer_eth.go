@@ -20,7 +20,6 @@ func main() {
 	fmt.Printf("%#v\n", privateKey)
 
 	publicKey := privateKey.Public()
-	//	log.Fatal("error casting public key to ECDSA")
 
 	fromAddress := api.PubkeyToAddress(publicKey)
 	nonce, err := client.PendingNonceAt(api.Background(), fromAddress)
@@ -29,8 +28,8 @@ func main() {
 	}
 
 	value := api.NewInt(10000000000000000) // in wei (1 eth)
-	gasLimit := int64(21000)                 //
-	gasPrice := api.NewInt(30000000000)      // in wei (30 gwei)
+	gasLimit := int64(21000)               //
+	gasPrice := api.NewInt(30000000000)    // in wei (30 gwei)
 
 	toAddress := api.HexToAddress("0x0abb28e0270074d5552a66d5dd172fbcb9db4fd7")
 	var data []byte
