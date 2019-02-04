@@ -4,18 +4,16 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/bcl-chain/web3.go/ethclient"
-	"github.com/bcl-chain/web3.go/gos/context"
-	"github.com/bcl-chain/web3.go/gos/math/big"
+	"github.com/bcl-chain/web3.go/api"
 )
 
 func main() {
-	client, err := ethclient.Dial("http://127.0.0.1:8545")
+	client, err := api.Dial("http://127.0.0.1:8545")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	header, err := client.HeaderByNumber(context.Background(), nil)
+	header, err := client.HeaderByNumber(api.Background(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -23,8 +21,8 @@ func main() {
 	blockNumber := header.Number()
 	fmt.Println(blockNumber.String()) //
 
-	blockNumber = big.NewInt(28)
-	block, err := client.BlockByNumber(context.Background(), blockNumber)
+	blockNumber = api.NewInt(15)
+	block, err := client.BlockByNumber(api.Background(), blockNumber)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,7 +33,7 @@ func main() {
 	fmt.Println(block.Hash().Hex())         //
 	fmt.Println(block.Transactions().Len()) //
 
-	count, err := client.TransactionCount(context.Background(), block.Hash())
+	count, err := client.TransactionCount(api.Background(), block.Hash())
 	if err != nil {
 		log.Fatal(err)
 	}

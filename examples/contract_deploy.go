@@ -3,42 +3,37 @@ package main
 import (
 //	store "./contracts" // for demo
 //	"fmt"
-	"github.com/bcl-chain/web3.go/accounts/abi/bind"
-	"github.com/bcl-chain/web3.go/crypto"
-	"github.com/bcl-chain/web3.go/ethclient"
-	"github.com/bcl-chain/web3.go/goos/context"
-	"github.com/bcl-chain/web3.go/goos/math/big"
+	"github.com/bcl-chain/web3.go/api"
 	"log"
 )
 
 func main() {
-	client, err := ethclient.Dial("http://127.0.0.1:8545")
+	client, err := api.Dial("http://127.0.0.1:8545")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	privateKey, err := crypto.HexToECDSA("fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19")
+	privateKey, err := api.HexToECDSA("fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	publicKey := privateKey.Public()
-	//	log.Fatal("error casting public key to ECDSA")
 
-	fromAddress := crypto.PubkeyToAddress(publicKey)
-	nonce, err := client.PendingNonceAt(context.Background(), fromAddress)
+	fromAddress := api.PubkeyToAddress(publicKey)
+	nonce, err := client.PendingNonceAt(api.Background(), fromAddress)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	gasPrice, err := client.SuggestGasPrice(context.Background())
+	gasPrice, err := client.SuggestGasPrice(api.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	auth := bind.NewKeyedTransactor(privateKey)
-	auth.SetNonce(big.NewInt(int64(nonce)))
-	auth.SetValue(big.NewInt(0))    // in wei
+	auth := api.NewKeyedTransactor(privateKey)
+	auth.SetNonce(api.NewInt(int64(nonce)))
+	auth.SetValue(api.NewInt(0))    // in wei
 	auth.SetGasLimit(int64(300000)) // in units
 	auth.SetGasPrice(gasPrice)
 
