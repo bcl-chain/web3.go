@@ -87,6 +87,13 @@ func (wtx *Transaction) AsMessage(ws *Signer) (*Message, error) {
 	return fromMessage(msg), err
 }
 
+func (wtx *Transaction) WithSignature(ws *Signer, sig []byte) (*Transaction, error) {
+	tx := toTransaction(wtx)
+	s := toSigner(ws)
+	tx2, err := tx.WithSignature(s, sig)
+	return fromTransaction(tx2), err
+}
+
 type Transactions struct {
 	transactions types.Transactions
 }

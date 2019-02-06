@@ -2,14 +2,6 @@ package api
 
 import (
 	"github.com/ethereum/go-ethereum/ethclient"
-	//	"github.com/bcl-chain/web3.go/common"
-	//	"github.com/bcl-chain/web3.go/core/types"
-	//	"github.com/bcl-chain/web3.go/gos/context"
-	//	"github.com/bcl-chain/web3.go/gos/math/big"
-	//	wcommon "github.com/bcl-chain/web3.go/wrapper/common"
-	//	wtypes "github.com/bcl-chain/web3.go/wrapper/core/types"
-	//	wcontext "github.com/bcl-chain/web3.go/wrapper/gos/context"
-	//	wbig "github.com/bcl-chain/web3.go/wrapper/gos/math/big"
 )
 
 type Client struct {
@@ -43,37 +35,79 @@ func Dial(rawurl string) (*Client, error) {
 	}
 }
 
-func (ec *Client) BalanceAt(wctx *Context, waccount *Address, wblockNumber *Int) (*Int, error) {
-	c := toClient(ec)
+func DialContext(wctx *Context, rawurl string) (*Client, error) {
 	ctx := toContext(wctx)
-	address := toAddress(waccount)
-	blockNumber := toBigInt(wblockNumber)
-
-	if bigInt, err := c.BalanceAt(ctx, address, blockNumber); err == nil {
-		return fromBigInt(bigInt), nil
+	if c, err := ethclient.DialContext(ctx, rawurl); err == nil {
+		return fromClient(c), nil
 	} else {
 		return nil, err
 	}
 }
 
-func (ec *Client) BlockByNumber(wctx *Context, wnumber *Int) (*Block, error) {
-	c := toClient(ec)
-	ctx := toContext(wctx)
-	blockNumber := toBigInt(wnumber)
+// TODO
+//func NewClient() *Client {
+//}
 
-	if block, err := c.BlockByNumber(ctx, blockNumber); err == nil {
+func (wec *Client) Close() {
+	ec := toClient(wec)
+	ec.Close()
+}
+
+func (wec *Client) BlockByHash(wctx *Context, whash *Hash) (*Block, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+	hash := toHash(whash)
+
+	if block, err := ec.BlockByHash(ctx, hash); err == nil {
 		return fromBlock(block), nil
 	} else {
 		return nil, err
 	}
 }
 
-func (ec *Client) HeaderByNumber(wctx *Context, wnumber *Int) (*Header, error) {
-	c := toClient(ec)
+func (wec *Client) BlockByNumber(wctx *Context, wnumber *Int) (*Block, error) {
+	ec := toClient(wec)
 	ctx := toContext(wctx)
 	blockNumber := toBigInt(wnumber)
 
-	if header, err := c.HeaderByNumber(ctx, blockNumber); err == nil {
+	if block, err := ec.BlockByNumber(ctx, blockNumber); err == nil {
+		return fromBlock(block), nil
+	} else {
+		return nil, err
+	}
+}
+
+func (wec *Client) BalanceAt(wctx *Context, waccount *Address, wblockNumber *Int) (*Int, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+	address := toAddress(waccount)
+	blockNumber := toBigInt(wblockNumber)
+
+	if bigInt, err := ec.BalanceAt(ctx, address, blockNumber); err == nil {
+		return fromBigInt(bigInt), nil
+	} else {
+		return nil, err
+	}
+}
+
+func (wec *Client) HeaderByHash(wctx *Context, whash *Hash) (*Header, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+	hash := toHash(whash)
+
+	if header, err := ec.HeaderByHash(ctx, hash); err == nil {
+		return fromHeader(header), nil
+	} else {
+		return nil, err
+	}
+}
+
+func (wec *Client) HeaderByNumber(wctx *Context, wnumber *Int) (*Header, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+	blockNumber := toBigInt(wnumber)
+
+	if header, err := ec.HeaderByNumber(ctx, blockNumber); err == nil {
 		return fromHeader(header), nil
 	} else {
 		return nil, err
@@ -81,88 +115,207 @@ func (ec *Client) HeaderByNumber(wctx *Context, wnumber *Int) (*Header, error) {
 }
 
 // divied into two functions; TransactionByHash and TransactionByHashIsPending
-func (ec *Client) TransactionByHash(wctx *Context, wblockHash *Hash) (*Transaction, error) {
-	c := toClient(ec)
+func (wec *Client) TransactionByHash(wctx *Context, wblockHash *Hash) (*Transaction, error) {
+	ec := toClient(wec)
 	ctx := toContext(wctx)
 	blockHash := toHash(wblockHash)
 
-	if tx, _, err := c.TransactionByHash(ctx, blockHash); err == nil {
+	if tx, _, err := ec.TransactionByHash(ctx, blockHash); err == nil {
 		return fromTransaction(tx), err
 	} else {
 		return nil, err
 	}
 }
 
-func (ec *Client) TransactionByHashIsPending(wctx *Context, wblockHash *Hash) (bool, error) {
-	c := toClient(ec)
+func (wec *Client) TransactionByHashIsPending(wctx *Context, wblockHash *Hash) (bool, error) {
+	ec := toClient(wec)
 	ctx := toContext(wctx)
 	blockHash := toHash(wblockHash)
 
-	if _, isPending, err := c.TransactionByHash(ctx, blockHash); err == nil {
+	if _, isPending, err := ec.TransactionByHash(ctx, blockHash); err == nil {
 		return isPending, err
 	} else {
 		return false, err
 	}
 }
 
-func (ec *Client) TransactionCount(wctx *Context, wblockHash *Hash) (int64, error) {
-	c := toClient(ec)
+func (wec *Client) TransactionSender(wctx *Context, wtx *Transaction, wblock *Hash, windex int) (*Address, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+	tx := toTransaction(wtx)
+	block := toHash(wblock)
+	index := uint(windex)
+
+	if address, err := ec.TransactionSender(ctx, tx, block, index); err == nil {
+		return fromAddress(address), nil
+	} else {
+		return nil, err
+	}
+}
+
+func (wec *Client) TransactionCount(wctx *Context, wblockHash *Hash) (int64, error) {
+	ec := toClient(wec)
 	ctx := toContext(wctx)
 	blockHash := toHash(wblockHash)
 
-	count, err := c.TransactionCount(ctx, blockHash)
+	count, err := ec.TransactionCount(ctx, blockHash)
 	return int64(count), err
 }
 
-func (ec *Client) TransactionInBlock(wctx *Context, wblockHash *Hash, index int64) (*Transaction, error) {
-	c := toClient(ec)
+func (wec *Client) TransactionInBlock(wctx *Context, wblockHash *Hash, index int64) (*Transaction, error) {
+	ec := toClient(wec)
 	ctx := toContext(wctx)
 	blockHash := toHash(wblockHash)
 	uindex := uint(index)
 
-	if tx, err := c.TransactionInBlock(ctx, blockHash, uindex); err == nil {
+	if tx, err := ec.TransactionInBlock(ctx, blockHash, uindex); err == nil {
 		return fromTransaction(tx), err
 	} else {
 		return nil, err
 	}
 }
 
-func (ec *Client) TransactionReceipt(wctx *Context, wblockHash *Hash) (*Receipt, error) {
-	c := toClient(ec)
+func (wec *Client) TransactionReceipt(wctx *Context, wblockHash *Hash) (*Receipt, error) {
+	ec := toClient(wec)
 	ctx := toContext(wctx)
 	blockHash := toHash(wblockHash)
 
-	if receipt, err := c.TransactionReceipt(ctx, blockHash); err == nil {
+	if receipt, err := ec.TransactionReceipt(ctx, blockHash); err == nil {
 		return fromReceipt(receipt), nil
 	} else {
 		return nil, err
 	}
 }
 
-func (ec *Client) PendingNonceAt(wctx *Context, waccount *Address) (int64, error) {
-	c := toClient(ec)
+// TODO
+//func SyncProgress {
+//}
+
+// TODO
+//func SubscribeNewHead {
+//}
+
+func (wec *Client) NetworkID(wctx *Context) (*Int, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+
+	if i, err := ec.NetworkID(ctx); err == nil {
+		return fromBigInt(i), nil
+	} else {
+		return nil, err
+	}
+}
+
+func (wec *Client) StorageAt(wctx *Context, waccount *Address, wkey *Hash, wblockNumber *Int) ([]byte, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+	account := toAddress(waccount)
+	key := toHash(wkey)
+	blockNumber := toBigInt(wblockNumber)
+
+	return ec.StorageAt(ctx, account, key, blockNumber)
+}
+
+func (wec *Client) CodeAt(wctx *Context, waccount *Address, wblockNumber *Int) ([]byte, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+	account := toAddress(waccount)
+	blockNumber := toBigInt(wblockNumber)
+
+	return ec.CodeAt(ctx, account, blockNumber)
+}
+
+// changed return from uint64 to int64
+func (wec *Client) NonceAt(wctx *Context, waccount *Address, wblockNumber *Int) (int64, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+	account := toAddress(waccount)
+	blockNumber := toBigInt(wblockNumber)
+
+	i, err := ec.NonceAt(ctx, account, blockNumber)
+	return int64(i), err
+}
+
+// TODO
+//func FilterLogs {
+//}
+
+// TODO
+//func SubscribeFilterLogs {
+//}
+
+func (wec *Client) PendingBalanceAt(wctx *Context, waccount *Address) (*Int, error) {
+	ec := toClient(wec)
 	ctx := toContext(wctx)
 	account := toAddress(waccount)
 
-	result, err := c.PendingNonceAt(ctx, account)
+	result, err := ec.PendingBalanceAt(ctx, account)
+	return fromBigInt(result), err
+}
+
+func (wec *Client) PendingStorageAt(wctx *Context, waccount *Address, wkey *Hash) ([]byte, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+	account := toAddress(waccount)
+	key := toHash(wkey)
+
+	return ec.PendingStorageAt(ctx, account, key)
+}
+
+func (wec *Client) PendingCodeAt(wctx *Context, waccount *Address) ([]byte, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+	account := toAddress(waccount)
+
+	return ec.PendingCodeAt(ctx, account)
+}
+
+// changed return from uint64 to int64
+func (wec *Client) PendingNonceAt(wctx *Context, waccount *Address) (int64, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+	account := toAddress(waccount)
+
+	result, err := ec.PendingNonceAt(ctx, account)
 	return int64(result), err
 }
 
-func (ec *Client) SuggestGasPrice(wctx *Context) (*Int, error) {
-	c := toClient(ec)
+// changed return from uint64 to int64
+func (wec *Client) PendingTransactionCount(wctx *Context) (int64, error) {
+	ec := toClient(wec)
 	ctx := toContext(wctx)
 
-	if gasPrice, err := c.SuggestGasPrice(ctx); err == nil {
+	result, err := ec.PendingTransactionCount(ctx)
+	return int64(result), err
+}
+
+// TODO
+//func CallContract {
+//}
+
+// TODO
+//func PendingCallContract {
+//}
+
+func (wec *Client) SuggestGasPrice(wctx *Context) (*Int, error) {
+	ec := toClient(wec)
+	ctx := toContext(wctx)
+
+	if gasPrice, err := ec.SuggestGasPrice(ctx); err == nil {
 		return fromBigInt(gasPrice), nil
 	} else {
 		return nil, err
 	}
 }
 
-func (ec *Client) SendTransaction(wctx *Context, wtx *Transaction) error {
-	c := toClient(ec)
+// TODO
+//func EstimateGas {
+//}
+
+func (wec *Client) SendTransaction(wctx *Context, wtx *Transaction) error {
+	ec := toClient(wec)
 	ctx := toContext(wctx)
 	tx := toTransaction(wtx)
 
-	return c.SendTransaction(ctx, tx)
+	return ec.SendTransaction(ctx, tx)
 }

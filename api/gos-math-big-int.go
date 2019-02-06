@@ -35,6 +35,14 @@ func NewInt(x int64) *Int {
 	return fromBigInt(i)
 }
 
+func (wz *Int) Sub(wx, wy *Int) *Int {
+	z := toBigInt(wz)
+	x := toBigInt(wx)
+	y := toBigInt(wy)
+	res := z.Sub(x, y)
+	return fromBigInt(res)
+}
+
 func (wx *Int) Int64() int64 {
 	x := toBigInt(wx)
 	return x.Int64()

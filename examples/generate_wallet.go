@@ -23,6 +23,10 @@ func main() {
 
 	// 3. get address from public key
 	address := api.PubkeyToAddress(pub)
-	//	fmt.Println(address)
 	fmt.Println(address.Hex())
+
+	// 4. get address from public key using Keccak-256
+	hash := api.NewKeccak256()
+	hash.Write(pubBytes[1:])
+	fmt.Println(api.Encode(hash.Sum(nil)[12:]))
 }
