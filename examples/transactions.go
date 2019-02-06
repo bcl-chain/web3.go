@@ -4,21 +4,17 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/bcl-chain/web3.go/common"
-	"github.com/bcl-chain/web3.go/core/types"
-	"github.com/bcl-chain/web3.go/ethclient"
-	"github.com/bcl-chain/web3.go/gos/context"
-	"github.com/bcl-chain/web3.go/gos/math/big"
+	"github.com/bcl-chain/web3.go/api"
 )
 
 func main() {
-	client, err := ethclient.Dial("http://127.0.0.1:8545")
+	client, err := api.Dial("http://127.0.0.1:8545")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	blockNumber := big.NewInt(104)
-	block, err := client.BlockByNumber(context.Background(), blockNumber)
+	blockNumber := api.NewInt(15)
+	block, err := client.BlockByNumber(api.Background(), blockNumber)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -34,11 +30,11 @@ func main() {
 		fmt.Println(tx.Data())             //
 		fmt.Println(tx.To().Hex())         //
 
-		if msg, err := tx.AsMessage(types.NewHomesteadSigner()); err != nil {
+		if msg, err := tx.AsMessage(api.NewHomesteadSigner()); err != nil {
 			fmt.Println(msg.From().Hex()) //
 		}
 
-		receipt, err := client.TransactionReceipt(context.Background(), tx.Hash())
+		receipt, err := client.TransactionReceipt(api.Background(), tx.Hash())
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -46,14 +42,14 @@ func main() {
 		fmt.Println(receipt.Status()) //
 	}
 
-	blockHash := common.HexToHash("0xfb0f445dd139f98095241d83bc1aaf16aaeb68d03a02863bc90383a7318967ee")
-	count, err := client.TransactionCount(context.Background(), blockHash)
+	blockHash := api.HexToHash("0xe1bcee950d7acd1de033e4d143e8683d15ed3aeb6d0814d579024424f4eac009")
+	count, err := client.TransactionCount(api.Background(), blockHash)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	for idx := int64(0); idx < count; idx++ {
-		tx, err := client.TransactionInBlock(context.Background(), blockHash, idx)
+		tx, err := client.TransactionInBlock(api.Background(), blockHash, idx)
 
 		if err != nil {
 			log.Fatal(err)
@@ -61,8 +57,9 @@ func main() {
 		fmt.Println(tx.Hash().Hex()) //
 	}
 
-	txHash := common.HexToHash("0x9852fc34f26b791e0877a81d094bb6b5ccea6d5a78302e381690ec393d071124")
-	tx, isPending, err := client.TransactionByHash(context.Background(), txHash)
+	txHash := api.HexToHash("0x3195e6a4cd745254fafda021fcfde00384d1b379e523311b0750dd4135a2e516")
+	tx, err := client.TransactionByHash(api.Background(), txHash)
+	isPending, err := client.TransactionByHashIsPending(api.Background(), txHash)
 	if err != nil {
 		log.Fatal(err)
 	}
