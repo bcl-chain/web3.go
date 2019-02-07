@@ -2,8 +2,6 @@ package api
 
 import (
 	"github.com/ethereum/go-ethereum/core/types"
-	//	"github.com/bcl-chain/web3.go/crypto"
-	//	wcrypto "github.com/bcl-chain/web3.go/wrapper/crypto"
 )
 
 func SignTx(wtx *Transaction, ws *Signer, wprv *PrivateKey) (*Transaction, error) {
@@ -15,6 +13,17 @@ func SignTx(wtx *Transaction, ws *Signer, wprv *PrivateKey) (*Transaction, error
 		return fromTransaction(tx), nil
 	} else {
 		return nil, err
+	}
+}
+
+func Sender(ws *Signer, wtx *Transaction) (*Address, error) {
+	s := toSigner(ws)
+	tx := toTransaction(wtx)
+
+	if a, err := types.Sender(s, tx); err == nil {
+		return fromAddress(a), nil
+	} else {
+	 return nil, err
 	}
 }
 

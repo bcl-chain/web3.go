@@ -39,6 +39,43 @@ func NewTransaction(nonce int64, wto *Address, wamount *Int, gasLimit int64, wga
 	return fromTransaction(tx)
 }
 
+func NewContractCreation(nonce int64, wamount *Int, gasLimit int64, wgasPrice *Int, data []byte) *Transaction {
+	amount := toBigInt(wamount)
+	gasPrice := toBigInt(wgasPrice)
+
+	tx := types.NewContractCreation(uint64(nonce), amount, uint64(gasLimit), gasPrice, data)
+	return fromTransaction(tx)
+}
+
+func (wtx *Transaction) ChainId() *Int {
+  tx := toTransaction(wtx)
+	x := tx.ChainId()
+	return fromBigInt(x)
+}
+
+func (wtx *Transaction) Protected() bool {
+  tx := toTransaction(wtx)
+	return tx.Protected()
+}
+
+// TODO
+//func EncodeRLP {
+//}
+
+// TODO
+//func DecodeRLP {
+//}
+
+func (wtx *Transaction) MarshalJSON() ([]byte, error) {
+	tx := toTransaction(wtx)
+	return tx.MarshalJSON()
+}
+
+func (wtx *Transaction) UnmarshalJSON(input []byte) error {
+	tx := toTransaction(wtx)
+	return tx.UnmarshalJSON(input)
+}
+
 func (wtx *Transaction) Data() []byte {
 	tx := toTransaction(wtx)
 	return tx.Data()
@@ -66,18 +103,26 @@ func (wtx *Transaction) Nonce() int64 {
 	return int64(tx.Nonce())
 }
 
+func (wtx *Transaction) CheckNonce() bool {
+	tx := toTransaction(wtx)
+	return tx.CheckNonce()
+}
+
 func (wtx *Transaction) To() *Address {
 	tx := toTransaction(wtx)
 	return fromAddress(*tx.To())
-	//	return &common.Address{
-	//		Address: *tx.To(),
-	//	}
 }
 
 func (wtx *Transaction) Hash() *Hash {
 	tx := toTransaction(wtx)
 	h := tx.Hash()
 	return fromHash(h)
+}
+
+func (wtx *Transaction) Size() *StorageSize {
+	tx := toTransaction(wtx)
+	s := tx.Size()
+	return fromStorageSize(s)
 }
 
 func (wtx *Transaction) AsMessage(ws *Signer) (*Message, error) {
@@ -93,6 +138,16 @@ func (wtx *Transaction) WithSignature(ws *Signer, sig []byte) (*Transaction, err
 	tx2, err := tx.WithSignature(s, sig)
 	return fromTransaction(tx2), err
 }
+
+func (wtx *Transaction) Cost() *Int {
+	tx := toTransaction(wtx)
+	c := tx.Cost()
+	return fromBigInt(c)
+}
+
+// TODO
+//func RawSignatureValues {
+//}
 
 type Transactions struct {
 	transactions types.Transactions
@@ -112,15 +167,32 @@ func toTransactions(wtxs *Transactions) types.Transactions {
 	}
 }
 
-func (ws *Transactions) Len() int {
-	s := toTransactions(ws)
-	return s.Len()
+// function not in geth, added by K
+func (wtxs *Transactions) Get(i int) *Transaction {
+	txs := toTransactions(wtxs)
+	return fromTransaction(txs[i])
 }
 
-// function not in geth, added by K
-func (ws *Transactions) Get(i int) *Transaction {
-	s := toTransactions(ws)
-	return fromTransaction(s[i])
+func (wtxs *Transactions) Len() int {
+	txs := toTransactions(wtxs)
+	return txs.Len()
+}
+
+func (wtxs *Transactions) Swap(i, j int) {
+	txs := toTransactions(wtxs)
+	txs.Swap(i, j)
+}
+
+func (wtxs *Transactions) GetRlp(i int) []byte {
+	txs := toTransactions(wtxs)
+	return txs.GetRlp(i)
+}
+
+func TxDifference(wa, wb *Transactions) *Transactions {
+	a := toTransactions(wa)
+	b := toTransactions(wb)
+	res := types.TxDifference(a, b)
+	return fromTransactions(res)
 }
 
 type Message struct {
@@ -141,15 +213,10 @@ func (wm *Message) From() *Address {
 	m := toMessage(wm)
 	f := m.From()
 	return fromAddress(f)
-	//	return &common.Address {
-	//		Address: m.From(),
-	//	}
 }
 
 func (wm *Message) To() *Address {
 	m := toMessage(wm)
-	return fromAddress(*m.To())
-	//	return &common.Address{
-	//		Address: *m.To(),
-	//	}
+	to := *m.To()
+	return fromAddress(to)
 }
