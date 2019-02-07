@@ -3,35 +3,36 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/bcl-chain/web3.go/api"
 	"log"
+
+	"github.com/bcl-chain/web3.go/mobile"
 )
 
 func main() {
 	// 1. prepare private key
-	privateKey, err := api.HexToECDSA("3062101dc0f00fd929bfb817d2ea21bf499106abbd7108f6bd33450ab7ec6ece")
+	privateKey, err := geth.HexToECDSA("3062101dc0f00fd929bfb817d2ea21bf499106abbd7108f6bd33450ab7ec6ece")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// 2. get public key form private key
 	publicKey := privateKey.Public()
-	publicKeyBytes := api.FromECDSAPub(publicKey)
+	publicKeyBytes := geth.FromECDSAPub(publicKey)
 
 	// 3. prepaer data to be signed
 	data := []byte("hello")
-	hash := api.Keccak256Hash(data)
-	fmt.Println(hash.Hex())
+	hash := geth.Keccak256Hash(data)
+	fmt.Println(hash.GetHex())
 
 	// 4. sign data with private key
-	signature, err := api.Sign(hash.Bytes(), privateKey)
+	signature, err := geth.Sign(hash.GetBytes(), privateKey)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(api.Encode(signature))
+	fmt.Println(geth.Encode(signature))
 
 	// 5. recover public key in []byte type from signature
-	sigPublicKey, err := api.Ecrecover(hash.Bytes(), signature)
+	sigPublicKey, err := geth.Ecrecover(hash.GetBytes(), signature)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -41,18 +42,18 @@ func main() {
 	fmt.Println(matches)
 
 	// 7. recover public key in ECDSA type from signature
-	sigPublicKeyECDSA, err := api.SigToPub(hash.Bytes(), signature)
+	sigPublicKeyECDSA, err := geth.SigToPub(hash.GetBytes(), signature)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// 8. check if recovered public key matches original public key
-	sigPublicKeyBytes := api.FromECDSAPub(sigPublicKeyECDSA)
+	sigPublicKeyBytes := geth.FromECDSAPub(sigPublicKeyECDSA)
 	matches = bytes.Equal(sigPublicKeyBytes, publicKeyBytes)
 	fmt.Println(matches)
 
 	// 9. check if signature is valid
 	signatureNoRecoverID := signature[:len(signature)-1] // remove recovery id
-	verified := api.VerifySignature(publicKeyBytes, hash.Bytes(), signatureNoRecoverID)
+	verified := geth.VerifySignature(publicKeyBytes, hash.GetBytes(), signatureNoRecoverID)
 	fmt.Println(verified)
 }
