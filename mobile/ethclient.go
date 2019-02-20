@@ -77,6 +77,12 @@ func (ec *EthereumClient) GetTransactionByHash(ctx *Context, hash *Hash) (tx *Tr
 	return &Transaction{rawTx}, err
 }
 
+// GetTransactionByHashIsPending returns if the transaction pending or not.
+func (ec *EthereumClient) GetTransactionByHashIsPending(ctx *Context, hash *Hash) (bool, error) {
+	_, isPending, err := ec.client.TransactionByHash(ctx.context, hash.hash)
+	return isPending, err
+}
+
 // GetTransactionSender returns the sender address of a transaction. The transaction must
 // be included in blockchain at the given block and index.
 func (ec *EthereumClient) GetTransactionSender(ctx *Context, tx *Transaction, blockhash *Hash, index int) (sender *Address, _ error) {

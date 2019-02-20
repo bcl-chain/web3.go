@@ -34,9 +34,9 @@ func main() {
 	}
 
 	// 5. set transaction parameters
-	value := geth.NewBigInt(100000000000000000) // in wei (1 eth)
-	gasLimit := int64(21000)                    //
-	gasPrice := geth.NewBigInt(30000000000)     // in wei (30 gwei)
+	value := geth.NewBigInt(100000000000000000)
+	gasLimit := int64(21000)
+	gasPrice := geth.NewBigInt(30000000000)
 	toAddress, _ := geth.NewAddressFromHex("0xFBcDe7c69381f5e3e0C02f983da48A65d88DD02a")
 
 	// 6. sign transaction

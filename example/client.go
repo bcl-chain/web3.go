@@ -17,14 +17,14 @@ func main() {
 
 	_ = client
 
-//	// 2. get networkID
-//	id, err := geth.NetworkID(api.NewContext())
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	fmt.Println("networkId:", id)
-//
-//	// 3. close connection to client
-//	geth.Close()
-//	fmt.Println("connection is closed")
+	//	// 2. get networkID
+	//	id, err := geth.NetworkID(api.NewContext())
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
+	//	fmt.Println("networkId:", id)
+	//
+	//	// 3. close connection to client
+	//	geth.Close()
+	//	fmt.Println("connection is closed")
 }

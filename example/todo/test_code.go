@@ -59,8 +59,6 @@ func main() {
 	fmt.Println(count)
 }
 
-
-
 func blocksAreEqual(b1, b2 *api.Block) bool {
 	if !headersAreEqual(b1.Header(), b2.Header()) {
 		return false
@@ -70,61 +68,61 @@ func blocksAreEqual(b1, b2 *api.Block) bool {
 		return false
 	}
 
-//	if b1.Number() != b2.Number() {
-//		return false
-//	}
-//
-//	if b1.GasLimit() != b2.GasLimit() {
-//		return false
-//	}
-//
-//	if b1.GasUsed() != b2.GasUsed() {
-//		return false
-//	}
-//
-//	if b1.Difficulty().Int64() != b2.Difficulty().Int64() {
-//		return false
-//	}
-//
-//	if b1.Time().Int64() != b2.Time().Int64() {
-//		return false
-//	}
-//
-//	if b1.MixDigest().Hex() != b2.MixDigest().Hex() {
-//		return false
-//	}
-//
-//	if b1.Nonce() != b2.Nonce() {
-//		return false
-//	}
-//
-//	if b1.Coinbase().Hex() != b2.Coinbase().Hex() {
-//		return false
-//	}
-//
-//	if b1.Root().Hex() != b2.Root().Hex() {
-//		return false
-//	}
-//
-//	if b1.ParentHash().Hex() != b2.ParentHash().Hex() {
-//		return false
-//	}
-//
-//	if b1.TxHash().Hex() != b2.TxHash().Hex() {
-//		return false
-//	}
-//
-//	if b1.ReceiptHash().Hex() != b2.ReceiptHash().Hex() {
-//		return false
-//	}
-//
-//	if b1.UncleHash().Hex() != b2.UncleHash().Hex() {
-//		return false
-//	}
-//
-//	if !reflect.DeepEqual(b1.Extra(), b2.Extra()) {
-//		return false
-//	}
+	//	if b1.Number() != b2.Number() {
+	//		return false
+	//	}
+	//
+	//	if b1.GasLimit() != b2.GasLimit() {
+	//		return false
+	//	}
+	//
+	//	if b1.GasUsed() != b2.GasUsed() {
+	//		return false
+	//	}
+	//
+	//	if b1.Difficulty().Int64() != b2.Difficulty().Int64() {
+	//		return false
+	//	}
+	//
+	//	if b1.Time().Int64() != b2.Time().Int64() {
+	//		return false
+	//	}
+	//
+	//	if b1.MixDigest().Hex() != b2.MixDigest().Hex() {
+	//		return false
+	//	}
+	//
+	//	if b1.Nonce() != b2.Nonce() {
+	//		return false
+	//	}
+	//
+	//	if b1.Coinbase().Hex() != b2.Coinbase().Hex() {
+	//		return false
+	//	}
+	//
+	//	if b1.Root().Hex() != b2.Root().Hex() {
+	//		return false
+	//	}
+	//
+	//	if b1.ParentHash().Hex() != b2.ParentHash().Hex() {
+	//		return false
+	//	}
+	//
+	//	if b1.TxHash().Hex() != b2.TxHash().Hex() {
+	//		return false
+	//	}
+	//
+	//	if b1.ReceiptHash().Hex() != b2.ReceiptHash().Hex() {
+	//		return false
+	//	}
+	//
+	//	if b1.UncleHash().Hex() != b2.UncleHash().Hex() {
+	//		return false
+	//	}
+	//
+	//	if !reflect.DeepEqual(b1.Extra(), b2.Extra()) {
+	//		return false
+	//	}
 
 	return true
 }
@@ -134,8 +132,8 @@ func transactionsAreEqual(txs1, txs2 *api.Transactions) bool {
 		return false
 	}
 
-  for i := 0; i < txs1.Len(); i++ {
-    tx1 := txs1.Get(i)
+	for i := 0; i < txs1.Len(); i++ {
+		tx1 := txs1.Get(i)
 		tx2 := txs2.Get(i)
 		if tx1.Hash().Hex() != tx2.Hash().Hex() {
 			return false

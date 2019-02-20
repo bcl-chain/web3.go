@@ -14,7 +14,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// 2. prepare private key
+	// 2. load private key
 	privateKey, err := geth.HexToECDSA("3062101dc0f00fd929bfb817d2ea21bf499106abbd7108f6bd33450ab7ec6ece")
 	if err != nil {
 		log.Fatal(err)
@@ -33,9 +33,9 @@ func main() {
 	}
 
 	// 6. set transaction parameters
-	value := geth.NewBigInt(10000000000000000) // in wei (1 eth)
-	gasLimit := int64(21000)                   //
-	gasPrice := geth.NewBigInt(30000000000)    // in wei (30 gwei)
+	value := geth.NewBigInt(10000000000000000)
+	gasLimit := int64(21000)
+	gasPrice := geth.NewBigInt(30000000000)
 	toAddress, _ := geth.NewAddressFromHex("0x0abb28e0270074d5552a66d5dd172fbcb9db4fd7")
 
 	// 7. sign transaction
