@@ -15,14 +15,13 @@ func main() {
 	}
 
 	// 2. get block using block number
-	blockNumber := int64(344)
+	blockNumber := int64(605)
 	block, err := client.GetBlockByNumber(geth.NewContext(), blockNumber)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// 3. get each transaction in the block
-	// TODO: cannnot range over wrapped Transactions
 	for i := 0; i < block.GetTransactions().Size(); i++ {
 		// 3-1. get each transaction
 		tx, _ := block.GetTransactions().Get(i)
@@ -40,9 +39,9 @@ func main() {
 		// }
 
 		// 3-2. get sender address
-		// if sender, err := client.TransactionSender(geth.NewContext(), tx, block.GetHash(), i); err == nil { //TODO: not implemented in mobile
-			// fmt.Println("sender:", sender.Hex())
-		// }
+		 if sender, err := client.GetTransactionSender(geth.NewContext(), tx, block.GetHash(), i); err == nil {
+			 fmt.Println("sender:", sender.GetHex())
+		 }
 
 		// 3-3. get receipt of the transaction
 		receipt, err := client.GetTransactionReceipt(geth.NewContext(), tx.GetHash())
@@ -53,7 +52,7 @@ func main() {
 	}
 
 	// 4. get block using block hash
-	blockHash, _ := geth.NewHashFromHex("0x4198cab5087eb41c3f1ec3db69e3dd828564050c223eaf80678b3155baf178d3")
+	blockHash, _ := geth.NewHashFromHex("0x88fb82c126d2b0d47980faa7b633fbe6a8880eb49ca61eb0767f713808522fc8")
 	count, err := client.GetTransactionCount(geth.NewContext(), blockHash)
 	if err != nil {
 		log.Fatal(err)
@@ -70,7 +69,7 @@ func main() {
 	}
 
 	// 6. get transaction using transaction hash
-	txHash, _ := geth.NewHashFromHex("0xb003c71c7b18a06d01af8494d7aaeb65a34d2db332a06cfe0f353a8c7d920138")
+	txHash, _ := geth.NewHashFromHex("0x9b082a8ac665b0987ab683c0385f5cf2c6d448c2f97c318146232d2e3bbe4a21")
 	tx, err := client.GetTransactionByHash(geth.NewContext(), txHash)
 	// isPending, err := client.GetTransactionByHashIsPending(geth.NewContext(), txHash) // TODO: not implemented in mobile
 	if err != nil {

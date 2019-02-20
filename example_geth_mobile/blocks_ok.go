@@ -14,16 +14,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// 2. get latest header
-//	header, err := client.GetHeaderByNumber(geth.NewContext(), nil)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	blockNumber := header.Number()
-//	fmt.Println(blockNumber.String())
-
-	// 3. get header of given block number
-	block, err := client.GetBlockByNumber(geth.NewContext(), 15)
+	// 2. get block of given block number
+	block, err := client.GetBlockByNumber(geth.NewContext(), 605)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,7 +31,7 @@ func main() {
 	fmt.Println(block.GetHash().GetHex())
 	fmt.Println(block.GetTransactions().Size())
 
-	// 4. get transaction count of the block
+	// 3. get transaction count of the block
 	count, err := client.GetTransactionCount(geth.NewContext(), block.GetHash())
 	if err != nil {
 		log.Fatal(err)
