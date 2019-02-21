@@ -12,7 +12,7 @@ import (
 )
 
 var (
- // secp256k1N = NewBigInt(0).SetString("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141", 16)
+// secp256k1N = NewBigInt(0).SetString("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141", 16)
 )
 
 type PublicKey struct {
@@ -76,7 +76,7 @@ func Keccak256(data []byte) []byte {
 //       have to check if this modification is fine or not.
 func Keccak256Hash(data []byte) *Hash {
 	h := crypto.Keccak256Hash(data)
-	return &Hash{hash:h}
+	return &Hash{hash: h}
 }
 
 // TODO: input type of original Keccak512 is ...[]byte.
@@ -90,7 +90,7 @@ func CreateAddress(wb *Address, wnonce int64) *Address {
 	b := wb.address
 	nonce := uint64(wnonce)
 	a := crypto.CreateAddress(b, nonce)
-	return &Address{address:a}
+	return &Address{address: a}
 }
 
 // TODO
@@ -157,11 +157,12 @@ func GenerateKey() (*PrivateKey, error) {
 	}
 }
 
-func ValidateSignatureValues(v byte, wr, ws *BigInt, homestead bool) bool {
-	r := wr.bigint
-	s := ws.bigint
-	return crypto.ValidateSignatureValues(v, r, s, homestead)
-}
+// TODO; this function does not work in ios binding, byte is not suppotred!!
+//func ValidateSignatureValues(v byte, wr, ws *BigInt, homestead bool) bool {
+//	r := wr.bigint
+//	s := ws.bigint
+//	return crypto.ValidateSignatureValues(v, r, s, homestead)
+//}
 
 func PubkeyToAddress(pub *PublicKey) *Address {
 	pubBytes := FromECDSAPub(pub)

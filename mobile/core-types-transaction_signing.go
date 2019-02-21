@@ -10,7 +10,7 @@ func SignTx(wtx *Transaction, ws *Signer2, wprv *PrivateKey) (*Transaction, erro
 	prv := toPrivateKey(wprv)
 
 	if tx, err := types.SignTx(tx, s, prv); err == nil {
-	 return &Transaction{tx:tx}, nil
+		return &Transaction{tx: tx}, nil
 	} else {
 		return nil, err
 	}
@@ -21,9 +21,9 @@ func Sender(ws *Signer2, wtx *Transaction) (*Address, error) {
 	tx := wtx.tx
 
 	if a, err := types.Sender(s, tx); err == nil {
-	 return &Address{address:a}, nil
+		return &Address{address: a}, nil
 	} else {
-	 return nil, err
+		return nil, err
 	}
 }
 

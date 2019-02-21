@@ -42,12 +42,14 @@ func NewInterface() *Interface {
 	return new(Interface)
 }
 
-func (i *Interface) SetBool(b bool)                { i.object = &b }
-func (i *Interface) SetBools(bs []bool)            { i.object = &bs }
-func (i *Interface) SetString(str string)          { i.object = &str }
-func (i *Interface) SetStrings(strs *Strings)      { i.object = &strs.strs }
-func (i *Interface) SetBinary(binary []byte)       { b := common.CopyBytes(binary); i.object = &b }
-func (i *Interface) SetBinaries(binaries [][]byte) { i.object = &binaries }
+func (i *Interface) SetBool(b bool) { i.object = &b }
+
+//func (i *Interface) SetBools(bs []bool)            { i.object = &bs }
+func (i *Interface) SetString(str string)     { i.object = &str }
+func (i *Interface) SetStrings(strs *Strings) { i.object = &strs.strs }
+func (i *Interface) SetBinary(binary []byte)  { b := common.CopyBytes(binary); i.object = &b }
+
+//func (i *Interface) SetBinaries(binaries [][]byte) { i.object = &binaries }
 func (i *Interface) SetAddress(address *Address)   { i.object = &address.address }
 func (i *Interface) SetAddresses(addrs *Addresses) { i.object = &addrs.addresses }
 func (i *Interface) SetHash(hash *Hash)            { i.object = &hash.hash }
@@ -84,12 +86,14 @@ func (i *Interface) SetDefaultUint64()    { i.object = new(uint64) }
 func (i *Interface) SetDefaultBigInt()    { i.object = new(*big.Int) }
 func (i *Interface) SetDefaultBigInts()   { i.object = new([]*big.Int) }
 
-func (i *Interface) GetBool() bool            { return *i.object.(*bool) }
-func (i *Interface) GetBools() []bool         { return *i.object.(*[]bool) }
-func (i *Interface) GetString() string        { return *i.object.(*string) }
-func (i *Interface) GetStrings() *Strings     { return &Strings{*i.object.(*[]string)} }
-func (i *Interface) GetBinary() []byte        { return *i.object.(*[]byte) }
-func (i *Interface) GetBinaries() [][]byte    { return *i.object.(*[][]byte) }
+func (i *Interface) GetBool() bool { return *i.object.(*bool) }
+
+//func (i *Interface) GetBools() []bool         { return *i.object.(*[]bool) }
+func (i *Interface) GetString() string    { return *i.object.(*string) }
+func (i *Interface) GetStrings() *Strings { return &Strings{*i.object.(*[]string)} }
+func (i *Interface) GetBinary() []byte    { return *i.object.(*[]byte) }
+
+//func (i *Interface) GetBinaries() [][]byte    { return *i.object.(*[][]byte) }
 func (i *Interface) GetAddress() *Address     { return &Address{*i.object.(*common.Address)} }
 func (i *Interface) GetAddresses() *Addresses { return &Addresses{*i.object.(*[]common.Address)} }
 func (i *Interface) GetHash() *Hash           { return &Hash{*i.object.(*common.Hash)} }
