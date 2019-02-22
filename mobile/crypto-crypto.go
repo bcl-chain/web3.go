@@ -15,55 +15,23 @@ var (
 // secp256k1N = NewBigInt(0).SetString("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141", 16)
 )
 
+// PublicKey ...
 type PublicKey struct {
 	publicKey *ecdsa.PublicKey
 }
 
-func fromPublicKey(pub *ecdsa.PublicKey) *PublicKey {
-	if pub != nil {
-		return &PublicKey{
-			publicKey: pub,
-		}
-	} else {
-		return nil
-	}
-}
-
-func toPublicKey(wpub *PublicKey) *ecdsa.PublicKey {
-	if wpub != nil {
-		return wpub.publicKey
-	} else {
-		return nil
-	}
-}
-
+// Public ...
 func (priv *PrivateKey) Public() *PublicKey {
 	privateKey := priv.privateKey
-	return fromPublicKey(&privateKey.PublicKey)
+	return &PublicKey{&privateKey.PublicKey}
 }
 
+// PrivateKey ...
 type PrivateKey struct {
 	privateKey *ecdsa.PrivateKey
 }
 
-func fromPrivateKey(prv *ecdsa.PrivateKey) *PrivateKey {
-	if prv != nil {
-		return &PrivateKey{
-			privateKey: prv,
-		}
-	} else {
-		return nil
-	}
-}
-
-func toPrivateKey(wprv *PrivateKey) *ecdsa.PrivateKey {
-	if wprv != nil {
-		return wprv.privateKey
-	} else {
-		return nil
-	}
-}
-
+// Keccak256 ...
 // TODO: input type of original Keccak256 is ...[]byte.
 //       K changed to []byte.
 //       have to check if this modification is fine or not.
@@ -71,6 +39,7 @@ func Keccak256(data []byte) []byte {
 	return crypto.Keccak256(data)
 }
 
+// Keccak256Hash ...
 // TODO: input type of original Keccak256Hash is ...[]byte.
 //       K changed to []byte.
 //       have to check if this modification is fine or not.
@@ -79,6 +48,7 @@ func Keccak256Hash(data []byte) *Hash {
 	return &Hash{hash: h}
 }
 
+// Keccak512 ...
 // TODO: input type of original Keccak512 is ...[]byte.
 //       K changed to []byte.
 //       have to check if this modification is fine or not.
@@ -86,6 +56,7 @@ func Keccak512(data []byte) []byte {
 	return crypto.Keccak512(data)
 }
 
+// CreateAddress ...
 func CreateAddress(wb *Address, wnonce int64) *Address {
 	b := wb.address
 	nonce := uint64(wnonce)
@@ -97,64 +68,75 @@ func CreateAddress(wb *Address, wnonce int64) *Address {
 //func CreateAddress2 {
 //}
 
+// ToECDSA ...
 func ToECDSA(d []byte) (*PrivateKey, error) {
-	if priv, err := crypto.ToECDSA(d); err == nil {
-		return fromPrivateKey(priv), nil
-	} else {
-		return nil, err
+	priv, err := crypto.ToECDSA(d)
+	if err == nil {
+		return &PrivateKey{priv}, nil
 	}
+	return nil, err
 }
 
+// ToECDSAUnsafe ...
 func ToECDSAUnsafe(d []byte) *PrivateKey {
 	priv := crypto.ToECDSAUnsafe(d)
-	return fromPrivateKey(priv)
+	return &PrivateKey{priv}
 }
 
+// FromECDSA ...
 func FromECDSA(priv *PrivateKey) []byte {
-	privateKey := toPrivateKey(priv)
+	privateKey := priv.privateKey
 	return crypto.FromECDSA(privateKey)
 }
 
+// UnmarshalPubkey ...
 func UnmarshalPubkey(pub []byte) (*PublicKey, error) {
-	if publicKey, err := crypto.UnmarshalPubkey(pub); err == nil {
-		return fromPublicKey(publicKey), nil
-	} else {
-		return nil, err
+	publicKey, err := crypto.UnmarshalPubkey(pub)
+	if err == nil {
+		return &PublicKey{publicKey}, nil
 	}
+	return nil, err
+
 }
 
+// FromECDSAPub ...
 func FromECDSAPub(pub *PublicKey) []byte {
-	publicKey := toPublicKey(pub)
+	publicKey := pub.publicKey
 	return crypto.FromECDSAPub(publicKey)
 }
 
+// HexToECDSA ...
 func HexToECDSA(hexkey string) (*PrivateKey, error) {
-	if privateKey, err := crypto.HexToECDSA(hexkey); err == nil {
-		return fromPrivateKey(privateKey), nil
-	} else {
-		return nil, err
+	privateKey, err := crypto.HexToECDSA(hexkey)
+	if err == nil {
+		return &PrivateKey{privateKey}, nil
 	}
+	return nil, err
+
 }
 
+// LoadECDSA ...
 func LoadECDSA(file string) (*PrivateKey, error) {
-	if privateKey, err := crypto.LoadECDSA(file); err == nil {
-		return fromPrivateKey(privateKey), nil
-	} else {
-		return nil, err
+	privateKey, err := crypto.LoadECDSA(file)
+	if err == nil {
+		return &PrivateKey{privateKey}, nil
 	}
+	return nil, err
 }
 
+// SaveECDSA ...
 func SaveECDSA(file string, wpriv *PrivateKey) error {
-	priv := toPrivateKey(wpriv)
+	priv := wpriv.privateKey
 	return crypto.SaveECDSA(file, priv)
 }
 
+// GenerateKey ...
 func GenerateKey() (*PrivateKey, error) {
-	if privateKey, err := crypto.GenerateKey(); err == nil {
-		return fromPrivateKey(privateKey), nil
-	} else {
-		return nil, err
+	privateKey, err := crypto.GenerateKey()
+	if err == nil {
+		return &PrivateKey{privateKey}, nil
 	}
+	return nil, err
 }
 
 // TODO; this function does not work in ios binding, byte is not suppotred!!
@@ -164,11 +146,12 @@ func GenerateKey() (*PrivateKey, error) {
 //	return crypto.ValidateSignatureValues(v, r, s, homestead)
 //}
 
+// PubkeyToAddress ...
 func PubkeyToAddress(pub *PublicKey) *Address {
 	pubBytes := FromECDSAPub(pub)
-	if a, err := NewAddressFromBytes(crypto.Keccak256(pubBytes[1:])[12:]); err == nil {
+	a, err := NewAddressFromBytes(crypto.Keccak256(pubBytes[1:])[12:])
+	if err == nil {
 		return a
-	} else {
-		return nil
 	}
+	return nil
 }

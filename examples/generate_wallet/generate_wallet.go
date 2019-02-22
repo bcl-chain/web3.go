@@ -26,12 +26,12 @@ func main() {
 	fmt.Println(address.GetHex())
 
 	// 4. get address from Hex private key
-	priv_key, err := geth.HexToECDSA("e09ae607ff4fb3320133e73a76d4fc8e5b784663b2f34662fb910f3ff5d8d5ef")
+	privKey, err := geth.HexToECDSA("e09ae607ff4fb3320133e73a76d4fc8e5b784663b2f34662fb910f3ff5d8d5ef")
 	if err != nil {
 		log.Fatal(err)
 	}
-	pub_key := priv_key.Public()
-	address = geth.PubkeyToAddress(pub_key)
+	pubKey := privKey.Public()
+	address = geth.PubkeyToAddress(pubKey)
 	if address.GetHex() == "0x15d48078AB8532b8857e0568311fc3792a5562ab" {
 		fmt.Println(address.GetHex())
 	} else {

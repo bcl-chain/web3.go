@@ -47,11 +47,22 @@ func NewCallMsg() *CallMsg {
 	return new(CallMsg)
 }
 
-func (msg *CallMsg) GetFrom() *Address    { return &Address{msg.msg.From} }
-func (msg *CallMsg) GetGas() int64        { return int64(msg.msg.Gas) }
+// GetFrom ...
+func (msg *CallMsg) GetFrom() *Address { return &Address{msg.msg.From} }
+
+// GetGas ...
+func (msg *CallMsg) GetGas() int64 { return int64(msg.msg.Gas) }
+
+// GetGasPrice ...
 func (msg *CallMsg) GetGasPrice() *BigInt { return &BigInt{msg.msg.GasPrice} }
-func (msg *CallMsg) GetValue() *BigInt    { return &BigInt{msg.msg.Value} }
-func (msg *CallMsg) GetData() []byte      { return msg.msg.Data }
+
+// GetValue ...
+func (msg *CallMsg) GetValue() *BigInt { return &BigInt{msg.msg.Value} }
+
+// GetData ...
+func (msg *CallMsg) GetData() []byte { return msg.msg.Data }
+
+// GetTo ...
 func (msg *CallMsg) GetTo() *Address {
 	if to := msg.msg.To; to != nil {
 		return &Address{*msg.msg.To}
@@ -59,11 +70,22 @@ func (msg *CallMsg) GetTo() *Address {
 	return nil
 }
 
-func (msg *CallMsg) SetFrom(address *Address)  { msg.msg.From = address.address }
-func (msg *CallMsg) SetGas(gas int64)          { msg.msg.Gas = uint64(gas) }
+// SetFrom ...
+func (msg *CallMsg) SetFrom(address *Address) { msg.msg.From = address.address }
+
+// SetGas ...
+func (msg *CallMsg) SetGas(gas int64) { msg.msg.Gas = uint64(gas) }
+
+// SetGasPrice ...
 func (msg *CallMsg) SetGasPrice(price *BigInt) { msg.msg.GasPrice = price.bigint }
-func (msg *CallMsg) SetValue(value *BigInt)    { msg.msg.Value = value.bigint }
-func (msg *CallMsg) SetData(data []byte)       { msg.msg.Data = common.CopyBytes(data) }
+
+// SetValue ...
+func (msg *CallMsg) SetValue(value *BigInt) { msg.msg.Value = value.bigint }
+
+// SetData ...
+func (msg *CallMsg) SetData(data []byte) { msg.msg.Data = common.CopyBytes(data) }
+
+// SetTo ...
 func (msg *CallMsg) SetTo(address *Address) {
 	if address == nil {
 		msg.msg.To = nil
@@ -78,11 +100,20 @@ type SyncProgress struct {
 	progress ethereum.SyncProgress
 }
 
+// GetStartingBlock ...
 func (p *SyncProgress) GetStartingBlock() int64 { return int64(p.progress.StartingBlock) }
-func (p *SyncProgress) GetCurrentBlock() int64  { return int64(p.progress.CurrentBlock) }
-func (p *SyncProgress) GetHighestBlock() int64  { return int64(p.progress.HighestBlock) }
-func (p *SyncProgress) GetPulledStates() int64  { return int64(p.progress.PulledStates) }
-func (p *SyncProgress) GetKnownStates() int64   { return int64(p.progress.KnownStates) }
+
+// GetCurrentBlock ...
+func (p *SyncProgress) GetCurrentBlock() int64 { return int64(p.progress.CurrentBlock) }
+
+// GetHighestBlock ...
+func (p *SyncProgress) GetHighestBlock() int64 { return int64(p.progress.HighestBlock) }
+
+// GetPulledStates ...
+func (p *SyncProgress) GetPulledStates() int64 { return int64(p.progress.PulledStates) }
+
+// GetKnownStates ...
+func (p *SyncProgress) GetKnownStates() int64 { return int64(p.progress.KnownStates) }
 
 // Topics is a set of topic lists to filter events with.
 type Topics struct{ topics [][]common.Hash }
@@ -136,12 +167,26 @@ func NewFilterQuery() *FilterQuery {
 	return new(FilterQuery)
 }
 
-func (fq *FilterQuery) GetFromBlock() *BigInt    { return &BigInt{fq.query.FromBlock} }
-func (fq *FilterQuery) GetToBlock() *BigInt      { return &BigInt{fq.query.ToBlock} }
-func (fq *FilterQuery) GetAddresses() *Addresses { return &Addresses{fq.query.Addresses} }
-func (fq *FilterQuery) GetTopics() *Topics       { return &Topics{fq.query.Topics} }
+// GetFromBlock ...
+func (fq *FilterQuery) GetFromBlock() *BigInt { return &BigInt{fq.query.FromBlock} }
 
-func (fq *FilterQuery) SetFromBlock(fromBlock *BigInt)    { fq.query.FromBlock = fromBlock.bigint }
-func (fq *FilterQuery) SetToBlock(toBlock *BigInt)        { fq.query.ToBlock = toBlock.bigint }
+// GetToBlock ...
+func (fq *FilterQuery) GetToBlock() *BigInt { return &BigInt{fq.query.ToBlock} }
+
+// GetAddresses ...
+func (fq *FilterQuery) GetAddresses() *Addresses { return &Addresses{fq.query.Addresses} }
+
+// GetTopics ...
+func (fq *FilterQuery) GetTopics() *Topics { return &Topics{fq.query.Topics} }
+
+// SetFromBlock ...
+func (fq *FilterQuery) SetFromBlock(fromBlock *BigInt) { fq.query.FromBlock = fromBlock.bigint }
+
+// SetToBlock ...
+func (fq *FilterQuery) SetToBlock(toBlock *BigInt) { fq.query.ToBlock = toBlock.bigint }
+
+// SetAddresses ...
 func (fq *FilterQuery) SetAddresses(addresses *Addresses) { fq.query.Addresses = addresses.addresses }
-func (fq *FilterQuery) SetTopics(topics *Topics)          { fq.query.Topics = topics.topics }
+
+// SetTopics ...
+func (fq *FilterQuery) SetTopics(topics *Topics) { fq.query.Topics = topics.topics }
