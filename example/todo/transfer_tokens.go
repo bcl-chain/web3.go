@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/bcl-chain/web3.go/api"
+	"github.com/bcl-chain/web3.go/mobile"
 )
 
 func main() {
