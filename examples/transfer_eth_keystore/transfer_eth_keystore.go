@@ -42,8 +42,8 @@ func main() {
 	// 6. sign transaction
 	var data []byte
 	tx := geth.NewTransaction(nonce, toAddress, value, gasLimit, gasPrice, data)
-	chainId := geth.NewBigInt(15)
-	signedTx, err := keyStore.SignTx(account0, tx, chainId)
+	chainID := geth.NewBigInt(15)
+	signedTx, err := keyStore.SignTx(account0, tx, chainID)
 	if err != nil {
 		log.Fatal(err)
 	}

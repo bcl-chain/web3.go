@@ -167,10 +167,9 @@ func (a *Address) GetBytes() []byte {
 
 // GetHash retrives the Hash representation of the address.
 func (a *Address) GetHash() *Hash {
-  h := a.address.Hash()
-  return &Hash{h}
+	h := a.address.Hash()
+	return &Hash{h}
 }
-
 
 // SetHex sets the specified hex string as the address value.
 func (a *Address) SetHex(address string) error {

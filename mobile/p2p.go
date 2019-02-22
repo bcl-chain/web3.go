@@ -29,13 +29,28 @@ type NodeInfo struct {
 	info *p2p.NodeInfo
 }
 
-func (ni *NodeInfo) GetID() string              { return ni.info.ID }
-func (ni *NodeInfo) GetName() string            { return ni.info.Name }
-func (ni *NodeInfo) GetEnode() string           { return ni.info.Enode }
-func (ni *NodeInfo) GetIP() string              { return ni.info.IP }
-func (ni *NodeInfo) GetDiscoveryPort() int      { return ni.info.Ports.Discovery }
-func (ni *NodeInfo) GetListenerPort() int       { return ni.info.Ports.Listener }
+// GetID ...
+func (ni *NodeInfo) GetID() string { return ni.info.ID }
+
+// GetName ...
+func (ni *NodeInfo) GetName() string { return ni.info.Name }
+
+// GetEnode ...
+func (ni *NodeInfo) GetEnode() string { return ni.info.Enode }
+
+// GetIP ...
+func (ni *NodeInfo) GetIP() string { return ni.info.IP }
+
+// GetDiscoveryPort ...
+func (ni *NodeInfo) GetDiscoveryPort() int { return ni.info.Ports.Discovery }
+
+// GetListenerPort ...
+func (ni *NodeInfo) GetListenerPort() int { return ni.info.Ports.Listener }
+
+// GetListenerAddress ...
 func (ni *NodeInfo) GetListenerAddress() string { return ni.info.ListenAddr }
+
+// GetProtocols ...
 func (ni *NodeInfo) GetProtocols() *Strings {
 	protos := []string{}
 	for proto := range ni.info.Protocols {
@@ -49,10 +64,19 @@ type PeerInfo struct {
 	info *p2p.PeerInfo
 }
 
-func (pi *PeerInfo) GetID() string            { return pi.info.ID }
-func (pi *PeerInfo) GetName() string          { return pi.info.Name }
-func (pi *PeerInfo) GetCaps() *Strings        { return &Strings{pi.info.Caps} }
-func (pi *PeerInfo) GetLocalAddress() string  { return pi.info.Network.LocalAddress }
+// GetID ...
+func (pi *PeerInfo) GetID() string { return pi.info.ID }
+
+// GetName ...
+func (pi *PeerInfo) GetName() string { return pi.info.Name }
+
+// GetCaps ...
+func (pi *PeerInfo) GetCaps() *Strings { return &Strings{pi.info.Caps} }
+
+// GetLocalAddress ...
+func (pi *PeerInfo) GetLocalAddress() string { return pi.info.Network.LocalAddress }
+
+// GetRemoteAddress ...
 func (pi *PeerInfo) GetRemoteAddress() string { return pi.info.Network.RemoteAddress }
 
 // PeerInfos represents a slice of infos about remote peers.

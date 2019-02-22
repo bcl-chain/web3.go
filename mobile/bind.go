@@ -38,6 +38,7 @@ type signer struct {
 	sign bind.SignerFn
 }
 
+// Sign
 func (s *signer) Sign(addr *Address, unsignedTx *Transaction) (signedTx *Transaction, _ error) {
 	sig, err := s.sign(types.HomesteadSigner{}, addr.address, unsignedTx.tx)
 	if err != nil {
@@ -56,15 +57,23 @@ func NewCallOpts() *CallOpts {
 	return new(CallOpts)
 }
 
-func (opts *CallOpts) IsPending() bool    { return opts.opts.Pending }
+// IsPending ...
+func (opts *CallOpts) IsPending() bool { return opts.opts.Pending }
+
+//GetGasLimit ...
 func (opts *CallOpts) GetGasLimit() int64 { return 0 /* TODO(karalabe) */ }
 
 // GetContext cannot be reliably implemented without identity preservation (https://github.com/golang/go/issues/16876)
 // Even then it's awkward to unpack the subtleties of a Go context out to Java.
 // func (opts *CallOpts) GetContext() *Context { return &Context{opts.opts.Context} }
 
-func (opts *CallOpts) SetPending(pending bool)     { opts.opts.Pending = pending }
-func (opts *CallOpts) SetGasLimit(limit int64)     { /* TODO(karalabe) */ }
+// SetPending ...
+func (opts *CallOpts) SetPending(pending bool) { opts.opts.Pending = pending }
+
+// SetGasLimit ...
+func (opts *CallOpts) SetGasLimit(limit int64) { /* TODO(karalabe) */ }
+
+// SetContext ...
 func (opts *CallOpts) SetContext(context *Context) { opts.opts.Context = context.context }
 
 // TransactOpts is the collection of authorization data required to create a
@@ -73,11 +82,20 @@ type TransactOpts struct {
 	opts bind.TransactOpts
 }
 
-func (opts *TransactOpts) GetFrom() *Address    { return &Address{opts.opts.From} }
-func (opts *TransactOpts) GetNonce() int64      { return opts.opts.Nonce.Int64() }
-func (opts *TransactOpts) GetValue() *BigInt    { return &BigInt{opts.opts.Value} }
+// GetFrom ...
+func (opts *TransactOpts) GetFrom() *Address { return &Address{opts.opts.From} }
+
+// GetNonce ...
+func (opts *TransactOpts) GetNonce() int64 { return opts.opts.Nonce.Int64() }
+
+// GetValue ...
+func (opts *TransactOpts) GetValue() *BigInt { return &BigInt{opts.opts.Value} }
+
+// GetGasPrice ...
 func (opts *TransactOpts) GetGasPrice() *BigInt { return &BigInt{opts.opts.GasPrice} }
-func (opts *TransactOpts) GetGasLimit() int64   { return int64(opts.opts.GasLimit) }
+
+// GetGasLimit ...
+func (opts *TransactOpts) GetGasLimit() int64 { return int64(opts.opts.GasLimit) }
 
 // GetSigner cannot be reliably implemented without identity preservation (https://github.com/golang/go/issues/16876)
 // func (opts *TransactOpts) GetSigner() Signer { return &signer{opts.opts.Signer} }
@@ -86,8 +104,13 @@ func (opts *TransactOpts) GetGasLimit() int64   { return int64(opts.opts.GasLimi
 // Even then it's awkward to unpack the subtleties of a Go context out to Java.
 //func (opts *TransactOpts) GetContext() *Context { return &Context{opts.opts.Context} }
 
+// SetFrom ...
 func (opts *TransactOpts) SetFrom(from *Address) { opts.opts.From = from.address }
-func (opts *TransactOpts) SetNonce(nonce int64)  { opts.opts.Nonce = big.NewInt(nonce) }
+
+// SetNonce ...
+func (opts *TransactOpts) SetNonce(nonce int64) { opts.opts.Nonce = big.NewInt(nonce) }
+
+// SetSigner ...
 func (opts *TransactOpts) SetSigner(s Signer) {
 	opts.opts.Signer = func(signer types.Signer, addr common.Address, tx *types.Transaction) (*types.Transaction, error) {
 		sig, err := s.Sign(&Address{addr}, &Transaction{tx})
@@ -97,9 +120,17 @@ func (opts *TransactOpts) SetSigner(s Signer) {
 		return sig.tx, nil
 	}
 }
-func (opts *TransactOpts) SetValue(value *BigInt)      { opts.opts.Value = value.bigint }
-func (opts *TransactOpts) SetGasPrice(price *BigInt)   { opts.opts.GasPrice = price.bigint }
-func (opts *TransactOpts) SetGasLimit(limit int64)     { opts.opts.GasLimit = uint64(limit) }
+
+// SetValue ...
+func (opts *TransactOpts) SetValue(value *BigInt) { opts.opts.Value = value.bigint }
+
+// SetGasPrice ...
+func (opts *TransactOpts) SetGasPrice(price *BigInt) { opts.opts.GasPrice = price.bigint }
+
+//SetGasLimit ...
+func (opts *TransactOpts) SetGasLimit(limit int64) { opts.opts.GasLimit = uint64(limit) }
+
+// SetContext ...
 func (opts *TransactOpts) SetContext(context *Context) { opts.opts.Context = context.context }
 
 // BoundContract is the base wrapper object that reflects a contract on the
@@ -143,7 +174,10 @@ func BindContract(address *Address, abiJSON string, client *EthereumClient) (con
 	}, nil
 }
 
+//GetAddress ...
 func (c *BoundContract) GetAddress() *Address { return &Address{c.address} }
+
+//GetDeployer ...
 func (c *BoundContract) GetDeployer() *Transaction {
 	if c.deployer == nil {
 		return nil

@@ -30,14 +30,29 @@ type Log struct {
 	log *types.Log
 }
 
-func (l *Log) GetAddress() *Address  { return &Address{l.log.Address} }
-func (l *Log) GetTopics() *Hashes    { return &Hashes{l.log.Topics} }
-func (l *Log) GetData() []byte       { return l.log.Data }
+// GetAddress ...
+func (l *Log) GetAddress() *Address { return &Address{l.log.Address} }
+
+// GetTopics ...
+func (l *Log) GetTopics() *Hashes { return &Hashes{l.log.Topics} }
+
+// GetData ...
+func (l *Log) GetData() []byte { return l.log.Data }
+
+// GetBlockNumber ...
 func (l *Log) GetBlockNumber() int64 { return int64(l.log.BlockNumber) }
-func (l *Log) GetTxHash() *Hash      { return &Hash{l.log.TxHash} }
-func (l *Log) GetTxIndex() int       { return int(l.log.TxIndex) }
-func (l *Log) GetBlockHash() *Hash   { return &Hash{l.log.BlockHash} }
-func (l *Log) GetIndex() int         { return int(l.log.Index) }
+
+// GetTxHash ...
+func (l *Log) GetTxHash() *Hash { return &Hash{l.log.TxHash} }
+
+// GetTxIndex ...
+func (l *Log) GetTxIndex() int { return int(l.log.TxIndex) }
+
+// GetBlockHash ...
+func (l *Log) GetBlockHash() *Hash { return &Hash{l.log.BlockHash} }
+
+// GetIndex ...
+func (l *Log) GetIndex() int { return int(l.log.Index) }
 
 // Logs represents a slice of VM logs.
 type Logs struct{ logs []*types.Log }
