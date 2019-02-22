@@ -1,6 +1,6 @@
 package geth
 
-import(
+import (
 	"hash"
 )
 
@@ -9,8 +9,8 @@ type GosHash struct {
 }
 
 func (wh *GosHash) Sum(b []byte) []byte {
-  h := wh.hash
-  return h.Sum(b)
+	h := wh.hash
+	return h.Sum(b)
 }
 
 func (wh *GosHash) Size() int {
@@ -19,8 +19,6 @@ func (wh *GosHash) Size() int {
 }
 
 func (wh *GosHash) Write(p []byte) (int, error) {
-  h := wh.hash
-  return h.Write(p)
+	h := wh.hash
+	return h.Write(p)
 }
-
-
