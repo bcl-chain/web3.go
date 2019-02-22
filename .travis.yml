@@ -1,0 +1,23 @@
+language: go
+go:
+  - 1.11
+env:
+  global:
+    - COVERALLS_PARALLEL=true
+notifications:
+  webhooks: https://coveralls.io/webhook
+  email:
+    recipients:
+      - youtao.xing@icloud.com
+      - k-katsushima@nri.co.jp
+    on_success: never # default: change
+    on_failure: always # default: always
+before_install:
+  - go get -u golang.org/x/lint/golint
+  - go get github.com/axw/gocov/gocov
+  - go get github.com/mattn/goveralls
+script:
+  - test -z "`gofmt -l .`"
+  - test -z "`golint ./...`"
+  - $GOPATH/bin/goveralls -service=travis-ci
+  - go test -v ./mobile/...
