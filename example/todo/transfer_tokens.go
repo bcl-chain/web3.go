@@ -46,7 +46,7 @@ func main() {
 
 	// 8. set method to call
 	transferFnSignature := []byte("transfer(address,uint256)")
-	hash := geth.NewKeccak256()
+	hash := geth.New256()
 	hash.Write(transferFnSignature)
 	methodID := hash.Sum(nil)[:4]
 	fmt.Println(geth.Encode(methodID)) // 0xa9059cbb

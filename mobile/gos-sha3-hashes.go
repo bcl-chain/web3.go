@@ -1,0 +1,9 @@
+package geth
+
+import(
+	"golang.org/x/crypto/sha3"
+)
+
+func New256() *GosHash {
+	return &GosHash{sha3.New256()	}
+}
