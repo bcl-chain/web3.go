@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/bcl-chain/web3.go/api"
+	"github.com/bcl-chain/web3.go/mobile"
 
 	//	store "./contracts" // for demo
 	store "./contracts_deploy" // for demo
