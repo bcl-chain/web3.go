@@ -10,19 +10,19 @@ import (
 
 func main() {
 	// connect to client
-	client, err := geth.NewEthereumClient("http://127.0.0.1:8545")
+	client, err := web3go.NewEthereumClient("http://127.0.0.1:8545")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// get latest block
-	block, err := client.GetBlockByNumber(geth.NewContext(), -1)
+	block, err := client.GetBlockByNumber(web3go.NewContext(), -1)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// get block of given block hash
-	block2, err := client.GetBlockByHash(geth.NewContext(), block.GetHash())
+	block2, err := client.GetBlockByHash(web3go.NewContext(), block.GetHash())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -33,13 +33,13 @@ func main() {
 	}
 
 	// get header of given block number
-	header, err := client.GetHeaderByNumber(geth.NewContext(), block.GetNumber())
+	header, err := client.GetHeaderByNumber(web3go.NewContext(), block.GetNumber())
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// get header of given block hash
-	header2, err := client.GetHeaderByHash(geth.NewContext(), block.GetHash())
+	header2, err := client.GetHeaderByHash(web3go.NewContext(), block.GetHash())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -52,7 +52,7 @@ func main() {
 	}
 
 	// 4. get transaction count of the block
-	count, err := client.GetTransactionCount(geth.NewContext(), block.GetHash())
+	count, err := client.GetTransactionCount(web3go.NewContext(), block.GetHash())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,7 +61,7 @@ func main() {
 	fmt.Println("test passed")
 }
 
-func blocksAreEqual(b1, b2 *geth.Block) bool {
+func blocksAreEqual(b1, b2 *web3go.Block) bool {
 	if !headersAreEqual(b1.GetHeader(), b2.GetHeader()) {
 		return false
 	}
@@ -129,7 +129,7 @@ func blocksAreEqual(b1, b2 *geth.Block) bool {
 	return true
 }
 
-func transactionsAreEqual(txs1, txs2 *geth.Transactions) bool {
+func transactionsAreEqual(txs1, txs2 *web3go.Transactions) bool {
 	if txs1.Size() != txs2.Size() {
 		return false
 	}
@@ -145,7 +145,7 @@ func transactionsAreEqual(txs1, txs2 *geth.Transactions) bool {
 	return true
 }
 
-func headersAreEqual(h1, h2 *geth.Header) bool {
+func headersAreEqual(h1, h2 *web3go.Header) bool {
 	if h1.GetNumber() != h2.GetNumber() {
 		return false
 	}
