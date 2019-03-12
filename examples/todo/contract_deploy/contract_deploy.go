@@ -13,13 +13,13 @@ import (
 
 func main() {
 	// 1. connect to cilent
-	client, err := geth.NewEthereumClient("http://127.0.0.1:8545")
+	client, err := web3go.NewEthereumClient("http://127.0.0.1:8545")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// 2. load private key
-	privateKey, err := geth.HexToECDSA("fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19")
+	privateKey, err := web3go.HexToECDSA("fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,16 +28,16 @@ func main() {
 	publicKey := privateKey.Public()
 
 	// 4. get address from public key
-	fromAddress := geth.PubkeyToAddress(publicKey)
+	fromAddress := web3go.PubkeyToAddress(publicKey)
 
 	// 5. get nonce of sender
-	nonce, err := client.GetPendingNonceAt(geth.NewContext(), fromAddress)
+	nonce, err := client.GetPendingNonceAt(web3go.NewContext(), fromAddress)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// 6. set gas price
-	gasPrice, err := client.SuggestGasPrice(geth.NewContext())
+	gasPrice, err := client.SuggestGasPrice(web3go.NewContext())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -47,9 +47,9 @@ func main() {
 
 	// 7. set parameters for contract deploy
 	// TODO: NewKeyedTransactor is not implemented in mobile package yet
-	//auth := geth.NewKeyedTransactor(privateKey)
-	//auth.SetNonce(geth.NewBigInt(int64(nonce)))
-	//auth.SetValue(geth.NewBigInt(0))   // in wei
+	//auth := web3go.NewKeyedTransactor(privateKey)
+	//auth.SetNonce(web3go.NewBigInt(int64(nonce)))
+	//auth.SetValue(web3go.NewBigInt(0))   // in wei
 	//auth.SetGasLimit(int64(300000)) // in units
 	//auth.SetGasPrice(gasPrice)
 
