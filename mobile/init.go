@@ -16,7 +16,7 @@
 
 // Contains initialization code for the mbile library.
 
-package geth
+package web3go
 
 import (
 	"os"

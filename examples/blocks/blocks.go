@@ -9,13 +9,13 @@ import (
 
 func main() {
 	// 1. connect to client
-	client, err := geth.NewEthereumClient("http://127.0.0.1:8545")
+	client, err := web3go.NewEthereumClient("http://127.0.0.1:8545")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// 2. get block of given block number
-	block, err := client.GetBlockByNumber(geth.NewContext(), 605)
+	block, err := client.GetBlockByNumber(web3go.NewContext(), 1)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -32,7 +32,7 @@ func main() {
 	fmt.Println(block.GetTransactions().Size())
 
 	// 3. get transaction count of the block
-	count, err := client.GetTransactionCount(geth.NewContext(), block.GetHash())
+	count, err := client.GetTransactionCount(web3go.NewContext(), block.GetHash())
 	if err != nil {
 		log.Fatal(err)
 	}

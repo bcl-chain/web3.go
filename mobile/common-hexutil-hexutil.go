@@ -1,4 +1,4 @@
-package geth
+package web3go
 
 import (
 	"github.com/ethereum/go-ethereum/common/hexutil"

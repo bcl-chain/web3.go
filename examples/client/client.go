@@ -9,7 +9,7 @@ import (
 
 func main() {
 	// 1. connect to client
-	client, err := geth.NewEthereumClient("http://127.0.0.1:8545")
+	client, err := web3go.NewEthereumClient("http://127.0.0.1:8545")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -18,7 +18,7 @@ func main() {
 	_ = client
 
 	//	// 2. get networkID
-	//	id, err := geth.NetworkID(api.NewContext())
+	//	id, err := web3go.NetworkID(api.NewContext())
 	//	if err != nil {
 	//		log.Fatal(err)
 	//	}

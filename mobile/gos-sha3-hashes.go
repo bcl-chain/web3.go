@@ -1,4 +1,4 @@
-package geth
+package web3go
 
 import (
 	"golang.org/x/crypto/sha3"
