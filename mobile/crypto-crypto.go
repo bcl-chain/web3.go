@@ -3,7 +3,7 @@
 // github.com/bcl-chain/go-ethereum/crypto.
 //
 
-package geth
+package web3go
 
 import (
 	"crypto/ecdsa"

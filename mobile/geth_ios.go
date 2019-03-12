@@ -16,7 +16,7 @@
 
 // +build ios
 
-package geth
+package web3go
 
 // clientIdentifier is a hard coded identifier to report into the network.
 var clientIdentifier = "iGeth"

@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	address, err := geth.NewAddressFromHex("0x71c7656ec7ab88b098defb751b7401b5f6d8976f")
+	address, err := web3go.NewAddressFromHex("0xa3bcb71efafe7fdeb13333baaf8f0a06cafc2a11")
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,4 +1,4 @@
-package geth
+package web3go
 
 import (
 	"hash"
