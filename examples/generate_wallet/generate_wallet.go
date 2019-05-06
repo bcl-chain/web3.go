@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/bcl-chain/web3.go/mobile"
+	"github.com/web3.go/mobile"
 )
 
 func main() {
@@ -13,6 +13,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(priv)
 	privBytes := web3go.FromECDSA(priv)
 	fmt.Println(web3go.Encode(privBytes)[2:])
 
