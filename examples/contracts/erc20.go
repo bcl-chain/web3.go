@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ethereum/go-ethereum/common"
-
 	"github.com/bcl-chain/web3.go/mobile"
 )
 
@@ -17,24 +15,38 @@ func main() {
 	}
 	fmt.Println("we have a connection")
 
-	erc20, err := web3go.NewERC20(common.HexToAddress("0xea26b3c7a6eb0a9b37cc145cb96f1409ef0023f2"), client)
+	address, _ := web3go.NewAddressFromHex("0x501b63b36d109427e9e5e2c59c83b55e4275133c")
+	erc20, err := web3go.NewERC20(address, client)
 	if err != nil {
 		log.Fatal(err)
 	}
-	balance, err := erc20.BalanceOf(common.HexToAddress("0x0e4ae5082f4307022c598121b81ad39f4554170e"))
+	address, _ = web3go.NewAddressFromHex("0x3776faee65fde11eda3acdf213da539805f83aa4")
+	balance, err := erc20.BalanceOf(address)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(balance.String())
 
-	//	// 2. get networkID
-	//	id, err := web3go.NetworkID(api.NewContext())
-	//	if err != nil {
-	//		log.Fatal(err)
-	//	}
-	//	fmt.Println("networkId:", id)
-	//
-	//	// 3. close connection to client
-	//	geth.Close()
-	//	fmt.Println("connection is closed")
+	opts := web3go.NewTransactOpts("943c44a3f2bbc4230ef40556cd9a6ad46f2e4ce5f2e04f17573a168b8356f3f0")
+	nonce, err := client.GetPendingNonceAt(web3go.NewContext(), opts.GetFrom())
+	if err != nil {
+		log.Fatal(err)
+	}
+	gasPrice, err := client.SuggestGasPrice(web3go.NewContext())
+	if err != nil {
+		log.Fatal(err)
+	}
+	opts.SetNonce(nonce)
+	opts.SetGasLimit(300000)
+	opts.SetGasPrice(gasPrice)
+
+	address, _ = web3go.NewAddressFromHex("0xc9fa4b1a25397dba5be5db658fcf2d191b253030")
+	erc20.Transfer(opts, address, web3go.NewBigInt(10))
+
+	address, _ = web3go.NewAddressFromHex("0x3776faee65fde11eda3acdf213da539805f83aa4")
+	balance, err = erc20.BalanceOf(address)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(balance.String())
 }
