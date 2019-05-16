@@ -1,0 +1,30 @@
+{
+  "name": "web3.go",
+  "version": "0.0.1",
+  "description": "[![Build Status](https://travis-ci.org/bcl-chain/web3.go.svg?branch=devel-v0.0.1)](https://travis-ci.org/bcl-chain/web3.go) [![Coverage Status](https://coveralls.io/repos/github/bcl-chain/web3.go/badge.svg?branch=devel-v0.0.1)](https://coveralls.io/github/bcl-chain/web3.go?branch=devel-v0.0.1)",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bcl-chain/web3.go.git"
+  },
+  "keywords": [
+    "openzeppelin"
+  ],
+  "author": "astra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bcl-chain/web3.go/issues"
+  },
+  "homepage": "https://github.com/bcl-chain/web3.go#readme",
+  "devDependencies": {
+    "openzeppelin-solidity": "^2.2.0",
+    "solc": "^0.5.8"
+  },
+  "dependencies": {}
+}
