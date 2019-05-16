@@ -19,6 +19,7 @@
 package web3go
 
 import (
+	"log"
 	"math/big"
 	"strings"
 
@@ -26,6 +27,7 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/crypto"
 )
 
 // Signer is an interaface defining the callback when a contract requires a
@@ -49,7 +51,7 @@ func (s *signer) Sign(addr *Address, unsignedTx *Transaction) (signedTx *Transac
 
 // CallOpts is the collection of options to fine tune a contract call request.
 type CallOpts struct {
-	opts bind.CallOpts
+	opts *bind.CallOpts
 }
 
 // NewCallOpts creates a new option set for contract calls.
@@ -79,7 +81,16 @@ func (opts *CallOpts) SetContext(context *Context) { opts.opts.Context = context
 // TransactOpts is the collection of authorization data required to create a
 // valid Ethereum transaction.
 type TransactOpts struct {
-	opts bind.TransactOpts
+	opts *bind.TransactOpts
+}
+
+func NewTransactOpts(pk string) *TransactOpts {
+	privateKey, err := crypto.HexToECDSA(pk)
+	if err != nil {
+		log.Fatal(err)
+	}
+	opts := bind.NewKeyedTransactor(privateKey)
+	return &TransactOpts{opts}
 }
 
 // GetFrom ...
@@ -150,7 +161,7 @@ func DeployContract(opts *TransactOpts, abiJSON string, bytecode []byte, client 
 	if err != nil {
 		return nil, err
 	}
-	addr, tx, bound, err := bind.DeployContract(&opts.opts, parsed, common.CopyBytes(bytecode), client.client, args.objects...)
+	addr, tx, bound, err := bind.DeployContract(opts.opts, parsed, common.CopyBytes(bytecode), client.client, args.objects...)
 	if err != nil {
 		return nil, err
 	}
@@ -190,14 +201,14 @@ func (c *BoundContract) GetDeployer() *Transaction {
 func (c *BoundContract) Call(opts *CallOpts, out *Interfaces, method string, args *Interfaces) error {
 	if len(out.objects) == 1 {
 		result := out.objects[0]
-		if err := c.contract.Call(&opts.opts, result, method, args.objects...); err != nil {
+		if err := c.contract.Call(opts.opts, result, method, args.objects...); err != nil {
 			return err
 		}
 		out.objects[0] = result
 	} else {
 		results := make([]interface{}, len(out.objects))
 		copy(results, out.objects)
-		if err := c.contract.Call(&opts.opts, &results, method, args.objects...); err != nil {
+		if err := c.contract.Call(opts.opts, &results, method, args.objects...); err != nil {
 			return err
 		}
 		copy(out.objects, results)
@@ -207,7 +218,7 @@ func (c *BoundContract) Call(opts *CallOpts, out *Interfaces, method string, arg
 
 // Transact invokes the (paid) contract method with params as input values.
 func (c *BoundContract) Transact(opts *TransactOpts, method string, args *Interfaces) (tx *Transaction, _ error) {
-	rawTx, err := c.contract.Transact(&opts.opts, method, args.objects...)
+	rawTx, err := c.contract.Transact(opts.opts, method, args.objects...)
 	if err != nil {
 		return nil, err
 	}
@@ -217,7 +228,7 @@ func (c *BoundContract) Transact(opts *TransactOpts, method string, args *Interf
 // Transfer initiates a plain transaction to move funds to the contract, calling
 // its default method if one is available.
 func (c *BoundContract) Transfer(opts *TransactOpts) (tx *Transaction, _ error) {
-	rawTx, err := c.contract.Transfer(&opts.opts)
+	rawTx, err := c.contract.Transfer(opts.opts)
 	if err != nil {
 		return nil, err
 	}
