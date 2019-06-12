@@ -25,9 +25,34 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
+type BigFloat struct {
+	bigfloat *big.Float
+}
+
 // A BigInt represents a signed multi-precision integer.
 type BigInt struct {
 	bigint *big.Int
+}
+
+func NewBigFloat(x float64) *BigFloat {
+	return &BigFloat{big.NewFloat(x)}
+}
+
+func (bf *BigFloat) String() string {
+	return bf.bigfloat.String()
+}
+
+func (bf *BigFloat) GetBigInt() (*BigInt, error) {
+	x, y := bf.bigfloat.Int(nil)
+	if y != big.Exact {
+		return nil, errors.New("The result is not Exact")
+	}
+	return &BigInt{x}, nil
+}
+
+func (bf *BigFloat) Mul(x *BigFloat) (*BigFloat) {
+	bf.bigfloat.Mul(bf.bigfloat, x.bigfloat)
+	return bf
 }
 
 // NewBigInt allocates and returns a new BigInt set to x.
@@ -116,4 +141,9 @@ func (bi *BigInts) Set(index int, bigint *BigInt) error {
 // GetString returns the value of x as a formatted string in some number base.
 func (bi *BigInt) GetString(base int) string {
 	return bi.bigint.Text(base)
+}
+
+func (bi *BigInt) Mul(x *BigInt) (*BigInt) {
+	bi.bigint.Mul(bi.bigint, x.bigint)
+	return bi
 }
