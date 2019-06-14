@@ -9,25 +9,25 @@ import (
 
 func main() {
 	// 1. connect to client
-	client, err := web3go.NewEthereumClient("http://192.168.2.89:8545")
+	client, err := web3go.NewEthereumClient("http://192.168.1.15:8545")
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("we have a connection")
 
-	address, _ := web3go.NewAddressFromHex("0x501b63b36d109427e9e5e2c59c83b55e4275133c")
+	address, _ := web3go.NewAddressFromHex("0xc558ed48e80b27cf8c57ebe5267997ceac5ea2c1")
 	erc20, err := web3go.NewERC20(address, client)
 	if err != nil {
 		log.Fatal(err)
 	}
-	address, _ = web3go.NewAddressFromHex("0x3776faee65fde11eda3acdf213da539805f83aa4")
+	address, _ = web3go.NewAddressFromHex("0xfe04cb1d7d6715169edc07c8e3c2fdba3a0854af")
 	balance, err := erc20.BalanceOf(address)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(balance.String())
 
-	opts := web3go.NewTransactOpts("943c44a3f2bbc4230ef40556cd9a6ad46f2e4ce5f2e04f17573a168b8356f3f0")
+	opts := web3go.NewTransactOpts("ac5c70f5a1c9f5b121edbbabb054d8763ac1f5066aeacbb14a5e4c10216fb605")
 	nonce, err := client.GetPendingNonceAt(web3go.NewContext(), opts.GetFrom())
 	if err != nil {
 		log.Fatal(err)
@@ -40,10 +40,13 @@ func main() {
 	opts.SetGasLimit(300000)
 	opts.SetGasPrice(gasPrice)
 
-	address, _ = web3go.NewAddressFromHex("0xc9fa4b1a25397dba5be5db658fcf2d191b253030")
-	erc20.Transfer(opts, address, web3go.NewBigInt(10))
+	address, _ = web3go.NewAddressFromHex("0xf80af2b63ee5e02a53e28c3ed470d8dd54a068d6")
+	tx, _ := erc20.BuildTransfer(opts, address, web3go.NewBigInt(10))
+	fmt.Println(tx.GetHash().GetHex())
+	tx, _ = erc20.Transfer(opts, address, web3go.NewBigInt(10))
+	fmt.Println(tx.GetHash().GetHex())
 
-	address, _ = web3go.NewAddressFromHex("0x3776faee65fde11eda3acdf213da539805f83aa4")
+	address, _ = web3go.NewAddressFromHex("0xfe04cb1d7d6715169edc07c8e3c2fdba3a0854af")
 	balance, err = erc20.BalanceOf(address)
 	if err != nil {
 		log.Fatal(err)
