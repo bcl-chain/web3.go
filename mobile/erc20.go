@@ -8,7 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 
-	"github.com/bcl-chain/web3.go/contract"
+	"github.com/bcl-chain/web3.go/contract/erc20"
 )
 
 type ERC20 struct {
@@ -17,6 +17,7 @@ type ERC20 struct {
 	erc20   *contract.ERC20
 }
 
+//封装erc20
 func NewERC20(address *Address, client *EthereumClient) (*ERC20, error) {
 	parsed, err := abi.JSON(strings.NewReader(contract.ERC20ABI))
 	if err != nil {
@@ -40,6 +41,7 @@ func (erc20 *ERC20) BalanceOf(who *Address) (*BigInt, error) {
 	}
 	return &BigInt{balance}, nil
 }
+
 
 func (erc20 *ERC20) BuildTransfer(opts *TransactOpts, to *Address, value *BigInt) (*Transaction, error) {
 	input, err := erc20.abi.Pack("transfer", to.address, value.bigint)
