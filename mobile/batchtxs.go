@@ -23,6 +23,7 @@ func BatchTxsUserToPlatform(pk string, to string, contract string, amount *BigIn
 	var data []byte
 
 	//token交易
+    //token txs
 	address, _ := NewAddressFromHex(contract)
 	erc20, err := NewERC20(address, client)
 	pk_, err := crypto.HexToECDSA(pk)
@@ -37,6 +38,7 @@ func BatchTxsUserToPlatform(pk string, to string, contract string, amount *BigIn
 	}
 
 	//手续费交易
+	//GI txs
 	nonce = nonce + 1
 	data = []byte(signedTokenTx.GetHash().GetHex())
 	gastxopt := NewTransaction(nonce, toAddress, value, gasLimit, gasPrice, data)
@@ -71,6 +73,7 @@ func BuildBatchTxsUserToPlatform(pk string, to string, contract string, amount *
 	var data []byte
 
 	//token交易
+	//token txs
 	address, _ := NewAddressFromHex(contract)
 	erc20, err := NewERC20(address, client)
 	pk_, err := crypto.HexToECDSA(pk)
@@ -85,6 +88,7 @@ func BuildBatchTxsUserToPlatform(pk string, to string, contract string, amount *
 	}
 
 	//手续费交易
+	//GI txs
 	nonce = nonce + 1
 	data = []byte(signedTokenTx.GetHash().GetHex())
 	gastxopt := NewTransaction(nonce, toAddress, value, gasLimit, gasPrice, data)
@@ -93,11 +97,6 @@ func BuildBatchTxsUserToPlatform(pk string, to string, contract string, amount *
 		log.Fatal(err)
 		return nil, nil, err
 	}
-	err = client.SendTransaction(NewContext(), signedGasTx)
-	if err != nil {
-		log.Fatal(err)
-		return nil, nil, err
-	}
-
+	
 	return signedTokenTx, signedGasTx, nil
 }

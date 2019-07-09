@@ -58,6 +58,7 @@ func main() {
   fmt.Println("增发余额",balance.String())
 
   // //销毁功能测试
+  // //burn test
   // fmt.Println("销毁功能测试")
   // btxopt := web3go.NewTransactOpts("4B0D53040702FE1A72DD3B370B58903BBA2476C6920FA2D4A8197369B0B1FC41")
   // nonce, err = client.GetPendingNonceAt(web3go.NewContext(), btxopt.GetFrom())
@@ -85,6 +86,7 @@ func main() {
   // fmt.Println("销毁余额",balance.String())
 
   // //转移功能测试
+  // //transferOwnship test
   // fmt.Println("转移权限功能测试")
   // ownershipReceiverAddr, _ := web3go.NewAddressFromHex("0x5BF987a39C38479A8057264aC904D64b20410427")
   // isminter, _ := dytoken.IsMinter(ownershipReceiverAddr)
@@ -119,6 +121,7 @@ func main() {
   // }
 
   // //禁用功能测试
+  // //pause test
   // fmt.Println("禁用功能测试")
   // ptxopt := web3go.NewTransactOpts("4B0D53040702FE1A72DD3B370B58903BBA2476C6920FA2D4A8197369B0B1FC41")
   // nonce, err = client.GetPendingNonceAt(web3go.NewContext(), ptxopt.GetFrom())
@@ -160,6 +163,7 @@ func main() {
   // }
 
   // //启用功能测试
+  // //unpause test
   // fmt.Println("启用功能测试")
   // unptxopt := web3go.NewTransactOpts("4B0D53040702FE1A72DD3B370B58903BBA2476C6920FA2D4A8197369B0B1FC41")
   // nonce, err = client.GetPendingNonceAt(web3go.NewContext(), unptxopt.GetFrom())

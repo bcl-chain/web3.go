@@ -61,14 +61,14 @@ func main() {
 	tvalue := web3go.NewBigInt(1)
 	tgasLimit := int64(20000000)
 	tgasPrice := web3go.NewBigInt(3000)
-	// TokenTx, GasTx, err := web3go.BatchTxsUserToPlatform(pk, to, tcontract, tamount, tvalue, tgasLimit, tgasPrice)
-	// fmt.Println(TokenTx.GetHash().GetHex())
-	// fmt.Println(GasTx.GetHash().GetHex())
-	// if err!= nil {
-	// 	log.Fatal(err)
-	// }
+	TokenTx, GasTx, err := web3go.BatchTxsUserToPlatform(pk, to, tcontract, tamount, tvalue, tgasLimit, tgasPrice)
+	fmt.Println(TokenTx.GetHash().GetHex())
+	fmt.Println(GasTx.GetHash().GetHex())
+	if err!= nil {
+		log.Fatal(err)
+	}
 
-	TokenTx, GasTx, err := web3go.BuildBatchTxsUserToPlatform(pk, to, tcontract, tamount, tvalue, tgasLimit, tgasPrice)
+	TokenTx, GasTx, err = web3go.BuildBatchTxsUserToPlatform(pk, to, tcontract, tamount, tvalue, tgasLimit, tgasPrice)
 	fmt.Println(TokenTx.GetHash().GetHex())
 	fmt.Println(GasTx.GetHash().GetHex())
 	if err!= nil {

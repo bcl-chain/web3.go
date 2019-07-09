@@ -45,6 +45,7 @@ func (DyToken *DyToken_) BalanceOf(who *Address) (*BigInt, error) {
 }
 
 //把交易发送到网络签名
+//send txs to net to sign
 func (DyToken *DyToken_) Transfer(opts *TransactOpts, to *Address, value *BigInt) (*Transaction, error) {
 	tx, err := DyToken.DyToken.Transfer(opts.opts, to.address, value.bigint)
 	if err != nil {
@@ -72,6 +73,7 @@ func (DyToken *DyToken_) BuildTransfer(opts *TransactOpts, to *Address, value *B
 }
 
 //增发功能
+//mint function
 func (DyToken *DyToken_) Mint(opts *TransactOpts, to *Address, value *BigInt) (*Transaction, error){
     tx, err := DyToken.DyToken.Mint(opts.opts, to.address, value.bigint)
     if err != nil {
@@ -99,6 +101,7 @@ func (DyToken *DyToken_) BuildMint(opts *TransactOpts, to *Address, value *BigIn
 }
 
 //销毁功能
+//burn function
 func (DyToken *DyToken_) Burn(opts *TransactOpts, value *BigInt) (*Transaction, error){
     tx, err := DyToken.DyToken.Burn(opts.opts, value.bigint)
     if err != nil {
@@ -126,6 +129,7 @@ func (DyToken *DyToken_) BuildBurn(opts *TransactOpts, value *BigInt) (*Transact
 }
 
 //转移权限功能
+//transfer token's ownership
 func (DyToken *DyToken_) TransferGRCOwnership (opts *TransactOpts, to *Address)(*Transaction, error){
   tx, err := DyToken.DyToken.TransferGRCOwnership(opts.opts, to.address)
   if err != nil {
@@ -153,6 +157,7 @@ func (DyToken *DyToken_) BuildTransferGRCOwnership(opts *TransactOpts, to *Addre
 }
 
 //禁用功能
+//pause function
 func (DyToken *DyToken_) Pause(opts *TransactOpts) (*Transaction, error){
     tx, err := DyToken.DyToken.Pause(opts.opts)
     if err != nil {
@@ -180,6 +185,7 @@ func (DyToken *DyToken_) BuildPause(opts *TransactOpts) (*Transaction, error) {
 }
 
 //启用功能
+//unpause function
 func (DyToken *DyToken_) UnPause(opts *TransactOpts) (*Transaction, error){
     tx, err := DyToken.DyToken.Unpause(opts.opts)
     if err != nil {
@@ -208,6 +214,7 @@ func (DyToken *DyToken_) BuildUnPause(opts *TransactOpts) (*Transaction, error) 
 
 
 //是否被禁用
+// if it is paused
 func (DyToken *DyToken_) Paused() (bool, error){
     flag, err := DyToken.DyToken.Paused(nil)
     if err != nil {
@@ -217,6 +224,7 @@ func (DyToken *DyToken_) Paused() (bool, error){
 }
 
 //判断是否有禁用权限
+// if someone has the right to pause
 func (DyToken *DyToken_) IsPauser(to *Address) (bool,error){
     ispauser, err := DyToken.DyToken.IsPauser(nil, to.address)
     if err !=nil {
@@ -226,6 +234,7 @@ func (DyToken *DyToken_) IsPauser(to *Address) (bool,error){
 }
 
 //判断是否有增发权限
+// if someone has the right to mint
 func (DyToken *DyToken_) IsMinter(to *Address) (bool,error){
     isminter, err := DyToken.DyToken.IsMinter(nil, to.address)
     if err !=nil {
