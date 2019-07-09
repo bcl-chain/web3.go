@@ -21,41 +21,41 @@ func main() {
 	}
 
   //增发权限功能测试,发布token的地址拥有增发权利
-  // address, _ = web3go.NewAddressFromHex("0x659f7Cef90f2Cd2d7ea186789338d53E5e2cCc86")
-  // isminter, _ := dytoken.IsMinter(address)
-  // if isminter {
-  //   fmt.Println("有增发权限")
-  // }else{
-  //   fmt.Println("无增发权限")
-  // }
+  address, _ = web3go.NewAddressFromHex("0x659f7Cef90f2Cd2d7ea186789338d53E5e2cCc86")
+  isminter, _ := dytoken.IsMinter(address)
+  if isminter {
+    fmt.Println("有增发权限")
+  }else{
+    fmt.Println("无增发权限")
+  }
 
-  // //增发功能测试
-  // fmt.Println("增发功能测试")
-  // txopt := web3go.NewTransactOpts("4B0D53040702FE1A72DD3B370B58903BBA2476C6920FA2D4A8197369B0B1FC41")
-  // nonce, err = client.GetPendingNonceAt(web3go.NewContext(), txopt.GetFrom())
-  // if err != nil {
-  //   log.Fatal(err)
-  // }
-  // gasPrice, err = client.SuggestGasPrice(web3go.NewContext())
-  // if err != nil {
-  //   log.Fatal(err)
-  // }
-  // txopt.SetNonce(nonce)
-  // txopt.SetGasLimit(500000)
-  // txopt.SetGasPrice(gasPrice)
-  //
-  // receiverAddr, _ := web3go.NewAddressFromHex("0xf80af2b63ee5e02a53e28c3ed470d8dd54a068d6")
-  // minttx, _ := dytoken.BuildMint(txopt,receiverAddr,web3go.NewBigInt(5))
-  // fmt.Println(minttx.GetHash().GetHex())
-  // minttx, _ = dytoken.Mint(txopt,receiverAddr,web3go.NewBigInt(5))
-  // fmt.Println(minttx.GetHash().GetHex())
-  //
-  // address, _ = web3go.NewAddressFromHex("0xf80af2b63ee5e02a53e28c3ed470d8dd54a068d6")
-  // balance, err = dytoken.BalanceOf(address)
-  // if err != nil {
-  //   log.Fatal(err)
-  // }
-  // fmt.Println("增发余额",balance.String())
+  //增发功能测试
+  fmt.Println("增发功能测试")
+  txopt := web3go.NewTransactOpts("4B0D53040702FE1A72DD3B370B58903BBA2476C6920FA2D4A8197369B0B1FC41")
+  nonce, err = client.GetPendingNonceAt(web3go.NewContext(), txopt.GetFrom())
+  if err != nil {
+    log.Fatal(err)
+  }
+  gasPrice, err = client.SuggestGasPrice(web3go.NewContext())
+  if err != nil {
+    log.Fatal(err)
+  }
+  txopt.SetNonce(nonce)
+  txopt.SetGasLimit(500000)
+  txopt.SetGasPrice(gasPrice)
+  
+  receiverAddr, _ := web3go.NewAddressFromHex("0xf80af2b63ee5e02a53e28c3ed470d8dd54a068d6")
+  minttx, _ := dytoken.BuildMint(txopt,receiverAddr,web3go.NewBigInt(5))
+  fmt.Println(minttx.GetHash().GetHex())
+  minttx, _ = dytoken.Mint(txopt,receiverAddr,web3go.NewBigInt(5))
+  fmt.Println(minttx.GetHash().GetHex())
+  
+  address, _ = web3go.NewAddressFromHex("0xf80af2b63ee5e02a53e28c3ed470d8dd54a068d6")
+  balance, err = dytoken.BalanceOf(address)
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Println("增发余额",balance.String())
 
   // //销毁功能测试
   // fmt.Println("销毁功能测试")

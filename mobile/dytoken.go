@@ -1,7 +1,7 @@
 package web3go
 
 import (
-  "math/big"
+    "math/big"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -205,6 +205,7 @@ func (DyToken *DyToken_) BuildUnPause(opts *TransactOpts) (*Transaction, error) 
 	}
 	return &Transaction{signedTx}, nil
 }
+
 
 //是否被禁用
 func (DyToken *DyToken_) Paused() (bool, error){

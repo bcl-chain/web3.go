@@ -30,7 +30,7 @@ func main() {
 	}
 	fmt.Println(balance.String())
 
-  //在原有交易hash上构建新的交易
+    //签名某交易
 	opts := web3go.NewTransactOpts("ac5c70f5a1c9f5b121edbbabb054d8763ac1f5066aeacbb14a5e4c10216fb605")
 	nonce, err := client.GetPendingNonceAt(web3go.NewContext(), opts.GetFrom())
 	if err != nil {
@@ -44,14 +44,14 @@ func main() {
 	opts.SetGasLimit(300000)
 	opts.SetGasPrice(gasPrice)
 
-  //从某账户地址发起交易,打印交易签名
+    //从某账户地址发起交易,打印交易签名
 	address, _ = web3go.NewAddressFromHex("0xf80af2b63ee5e02a53e28c3ed470d8dd54a068d6")
 	tx, _ := erc20.BuildTransfer(opts, address, web3go.NewBigInt(10))
 	fmt.Println(tx.GetHash().GetHex())
 	tx, _ = erc20.Transfer(opts, address, web3go.NewBigInt(10))
 	fmt.Println(tx.GetHash().GetHex())
 
-  //打印账户token余额
+    //打印账户token余额
 	address, _ = web3go.NewAddressFromHex("0xfe04cb1d7d6715169edc07c8e3c2fdba3a0854af")
 	balance, err = erc20.BalanceOf(address)
 	if err != nil {
