@@ -9,7 +9,7 @@ import (
 
 func main() {
 	// 1. connect to client
-	client, err := web3go.NewEthereumClient("http://127.0.0.1:8545")
+	client, err := web3go.NewEthereumClient("http://119.3.43.136.8203")
 	if err != nil {
 		log.Fatal(err)
 	}
