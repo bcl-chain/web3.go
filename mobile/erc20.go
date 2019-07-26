@@ -8,7 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 
-	"github.com/bcl-chain/web3.go/contract/erc20"
+	contract "github.com/bcl-chain/web3.go/contract/erc20"
 )
 
 type ERC20 struct {
@@ -42,8 +42,7 @@ func (erc20 *ERC20) BalanceOf(who *Address) (*BigInt, error) {
 	return &BigInt{balance}, nil
 }
 
-
-func (erc20 *ERC20) BuildTransfer(opts *TransactOpts, to *Address, value *BigInt) (*Transaction, error) {
+func (erc20 *ERC20) BuildTransfer(opts *TransactOpts, to *Address, value *BigInt, chainId int64) (*Transaction, error) {
 	input, err := erc20.abi.Pack("transfer", to.address, value.bigint)
 	if err != nil {
 		return nil, err
@@ -54,7 +53,7 @@ func (erc20 *ERC20) BuildTransfer(opts *TransactOpts, to *Address, value *BigInt
 	}
 
 	rawTx := types.NewTransaction(opts.opts.Nonce.Uint64(), erc20.address, amount, opts.opts.GasLimit, opts.opts.GasPrice, input)
-	signedTx, err := opts.opts.Signer(types.HomesteadSigner{}, opts.opts.From, rawTx)
+	signedTx, err := opts.opts.Signer(types.NewEIP155Signer(big.NewInt(chainId)), opts.opts.From, rawTx)
 	if err != nil {
 		return nil, err
 	}
