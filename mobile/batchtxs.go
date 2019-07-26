@@ -113,10 +113,10 @@ import (
 // 	return signedTokenTx, signedGasTx, nil
 // }
 
-func TokenTX(tokentxopt *TransactOpts, toaddr *Address, value *BigInt, contract string, client *EthereumClient, chainId int64) (*Transaction, error) {
+func TokenTX(tokentxopt *TransactOpts, toaddr *Address, iamount string, decimals int, contract string, client *EthereumClient, chainId int64) (*Transaction, error) {
 	address, _ := NewAddressFromHex(contract)
 	erc20, _ := NewERC20(address, client)
-	signedTokenTx, err := erc20.BuildTransfer(tokentxopt, toaddr, value, chainId)
+	signedTokenTx, err := erc20.BuildTransfer(tokentxopt, toaddr, iamount, decimals, chainId)
 	if err != nil {
 		log.Fatal(err)
 		return nil, err
@@ -136,13 +136,13 @@ func GITx(gitxopt *Transaction, privateKey string) (*Transaction, error) {
 
 //step one: invoke rpc function to send the two transaction
 //step two: invoke batch rpc function to send the packed two function
-func SendTxs(tokentxopt *TransactOpts, toaddr *Address, value *BigInt, contract string, client *EthereumClient, gitxopt *Transaction) (*Transactions, error) {
+func SendTxs(tokentxopt *TransactOpts, toaddr *Address, iamount string, decimals int, contract string, client *EthereumClient, gitxopt *Transaction) (*Transactions, error) {
 
 	txs := make(types.Transactions, 0, 2)
 
 	address, _ := NewAddressFromHex(contract)
 	erc20, _ := NewERC20(address, client)
-	signedTokenTx, err := erc20.Transfer(tokentxopt, toaddr, value)
+	signedTokenTx, err := erc20.Transfer(tokentxopt, toaddr, iamount, decimals)
 	if err != nil {
 		log.Fatal(err)
 		return &Transactions{txs: txs}, err

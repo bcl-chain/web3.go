@@ -42,8 +42,9 @@ func (erc20 *ERC20) BalanceOf(who *Address) (*BigInt, error) {
 	return &BigInt{balance}, nil
 }
 
-func (erc20 *ERC20) BuildTransfer(opts *TransactOpts, to *Address, value *BigInt, chainId int64) (*Transaction, error) {
-	input, err := erc20.abi.Pack("transfer", to.address, value.bigint)
+func (erc20 *ERC20) BuildTransfer(opts *TransactOpts, to *Address, iamount string, decimals int, chainId int64) (*Transaction, error) {
+	value := ToWei(iamount, decimals)
+	input, err := erc20.abi.Pack("transfer", to.address, value)
 	if err != nil {
 		return nil, err
 	}
@@ -60,8 +61,9 @@ func (erc20 *ERC20) BuildTransfer(opts *TransactOpts, to *Address, value *BigInt
 	return &Transaction{signedTx}, nil
 }
 
-func (erc20 *ERC20) Transfer(opts *TransactOpts, to *Address, value *BigInt) (*Transaction, error) {
-	tx, err := erc20.erc20.Transfer(opts.opts, to.address, value.bigint)
+func (erc20 *ERC20) Transfer(opts *TransactOpts, to *Address, iamount string, decimals int) (*Transaction, error) {
+	value := ToWei(iamount, decimals)
+	tx, err := erc20.erc20.Transfer(opts.opts, to.address, value)
 	if err != nil {
 		return nil, err
 	}

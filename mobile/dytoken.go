@@ -46,16 +46,18 @@ func (DyToken *DyToken_) BalanceOf(who *Address) (*BigInt, error) {
 
 //把交易发送到网络签名
 //send txs to net to sign
-func (DyToken *DyToken_) Transfer(opts *TransactOpts, to *Address, value *BigInt) (*Transaction, error) {
-	tx, err := DyToken.DyToken.Transfer(opts.opts, to.address, value.bigint)
+func (DyToken *DyToken_) Transfer(opts *TransactOpts, to *Address, iamount string, decimals int) (*Transaction, error) {
+	value := ToWei(iamount, decimals)
+	tx, err := DyToken.DyToken.Transfer(opts.opts, to.address, value)
 	if err != nil {
 		return nil, err
 	}
 	return &Transaction{tx}, nil
 }
 
-func (DyToken *DyToken_) BuildTransfer(opts *TransactOpts, to *Address, value *BigInt, chainId int64) (*Transaction, error) {
-	input, err := DyToken.abi.Pack("transfer", to.address, value.bigint)
+func (DyToken *DyToken_) BuildTransfer(opts *TransactOpts, to *Address, iamount string, decimals int, chainId int64) (*Transaction, error) {
+	value := ToWei(iamount, decimals)
+	input, err := DyToken.abi.Pack("transfer", to.address, value)
 	if err != nil {
 		return nil, err
 	}
@@ -74,16 +76,18 @@ func (DyToken *DyToken_) BuildTransfer(opts *TransactOpts, to *Address, value *B
 
 //增发功能
 //mint function
-func (DyToken *DyToken_) Mint(opts *TransactOpts, to *Address, value *BigInt) (*Transaction, error) {
-	tx, err := DyToken.DyToken.Mint(opts.opts, to.address, value.bigint)
+func (DyToken *DyToken_) Mint(opts *TransactOpts, to *Address, iamount string, decimals int) (*Transaction, error) {
+	value := ToWei(iamount, decimals)
+	tx, err := DyToken.DyToken.Mint(opts.opts, to.address, value)
 	if err != nil {
 		return nil, err
 	}
 	return &Transaction{tx}, err
 }
 
-func (DyToken *DyToken_) BuildMint(opts *TransactOpts, to *Address, value *BigInt, chainId int64) (*Transaction, error) {
-	input, err := DyToken.abi.Pack("mint", to.address, value.bigint)
+func (DyToken *DyToken_) BuildMint(opts *TransactOpts, to *Address, iamount string, decimals int, chainId int64) (*Transaction, error) {
+	value := ToWei(iamount, decimals)
+	input, err := DyToken.abi.Pack("mint", to.address, value)
 	if err != nil {
 		return nil, err
 	}
@@ -102,16 +106,18 @@ func (DyToken *DyToken_) BuildMint(opts *TransactOpts, to *Address, value *BigIn
 
 //销毁功能
 //burn function
-func (DyToken *DyToken_) Burn(opts *TransactOpts, value *BigInt) (*Transaction, error) {
-	tx, err := DyToken.DyToken.Burn(opts.opts, value.bigint)
+func (DyToken *DyToken_) Burn(opts *TransactOpts, iamount string, decimals int) (*Transaction, error) {
+	value := ToWei(iamount, decimals)
+	tx, err := DyToken.DyToken.Burn(opts.opts, value)
 	if err != nil {
 		return nil, err
 	}
 	return &Transaction{tx}, err
 }
 
-func (DyToken *DyToken_) BuildBurn(opts *TransactOpts, value *BigInt, chainId int64) (*Transaction, error) {
-	input, err := DyToken.abi.Pack("burn", value.bigint)
+func (DyToken *DyToken_) BuildBurn(opts *TransactOpts, iamount string, decimals int, chainId int64) (*Transaction, error) {
+	value := ToWei(iamount, decimals)
+	input, err := DyToken.abi.Pack("burn", value)
 	if err != nil {
 		return nil, err
 	}
