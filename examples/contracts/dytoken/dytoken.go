@@ -46,9 +46,9 @@ func main() {
 	txopt.SetGasPrice(gasPrice)
 
 	receiverAddr, _ := web3go.NewAddressFromHex("0xf80af2b63ee5e02a53e28c3ed470d8dd54a068d6")
-	minttx, _ := dytoken.BuildMint(txopt, receiverAddr, "5", 18, 8888)
+	minttx, _ := dytoken.BuildMint(txopt, receiverAddr, web3go.NewBigInt(5))
 	fmt.Println(minttx.GetHash().GetHex())
-	minttx, _ = dytoken.Mint(txopt, receiverAddr, "5", 18)
+	minttx, _ = dytoken.Mint(txopt, receiverAddr, web3go.NewBigInt(5))
 	fmt.Println(minttx.GetHash().GetHex())
 
 	address, _ = web3go.NewAddressFromHex("0xf80af2b63ee5e02a53e28c3ed470d8dd54a068d6")
