@@ -124,9 +124,9 @@ func TokenTX(tokentxopt *TransactOpts, toaddr *Address, iamount string, decimals
 	return signedTokenTx, nil
 }
 
-func GITx(gitxopt *Transaction, privateKey string) (*Transaction, error) {
+func GITx(gitxopt *Transaction, privateKey string, chainId int64) (*Transaction, error) {
 	privateKey_, err := HexToECDSA(privateKey)
-	signedGITx, err := SignTx(gitxopt, NewHomesteadSigner(), privateKey_)
+	signedGITx, err := SignTx(gitxopt, NewEIP155Signer(chainId), privateKey_)
 	if err != nil {
 		log.Fatal(err)
 		return nil, err
