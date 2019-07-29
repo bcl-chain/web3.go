@@ -15,6 +15,7 @@ type ERC20 struct {
 	abi     abi.ABI
 	address common.Address
 	erc20   *contract.ERC20
+	client  *EthereumClient
 }
 
 //封装erc20
@@ -31,6 +32,7 @@ func NewERC20(address *Address, client *EthereumClient) (*ERC20, error) {
 		abi:     parsed,
 		address: address.address,
 		erc20:   erc20,
+		client:  client,
 	}, nil
 }
 
@@ -68,4 +70,8 @@ func (erc20 *ERC20) Transfer(opts *TransactOpts, to *Address, iamount string, de
 		return nil, err
 	}
 	return &Transaction{tx}, nil
+}
+
+func (erc20 *ERC20) SendTransfer(tx *Transaction) error {
+	return erc20.client.SendTransaction(NewContext(), tx)
 }
