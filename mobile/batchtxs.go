@@ -137,7 +137,6 @@ func GITx(gitxopt *Transaction, privateKey string) (*Transaction, error) {
 //step one: invoke rpc function to send the two transaction
 //step two: invoke batch rpc function to send the packed two function
 func SendTxs(tokentxopt *TransactOpts, toaddr *Address, iamount string, decimals int, chainId int64, contract string, client *EthereumClient, gitxopt *Transaction) (*Transactions, error) {
-
 	txs := make(types.Transactions, 0, 2)
 
 	address, _ := NewAddressFromHex(contract)
