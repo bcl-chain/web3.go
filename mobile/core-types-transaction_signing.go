@@ -1,6 +1,8 @@
 package web3go
 
 import (
+	"math/big"
+
 	"github.com/ethereum/go-ethereum/core/types"
 )
 
@@ -41,5 +43,9 @@ type HomesteadSigner struct {
 
 // NewHomesteadSigner ...
 func NewHomesteadSigner() *Signer2 {
-	return &Signer2{types.HomesteadSigner{}}
+	return &Signer2{}
+}
+
+func NewEIP155Signer(chainId int64) *Signer2 {
+	return &Signer2{types.NewEIP155Signer(big.NewInt(chainId))}
 }
