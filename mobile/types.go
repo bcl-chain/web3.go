@@ -268,7 +268,11 @@ type Transaction struct {
 }
 
 // NewTransaction creates a new transaction with the given properties.
-func NewTransaction(nonce int64, to *Address, iamount *BigInt, gasLimit int64, gasPrice *BigInt, data []byte) *Transaction {
+func NewTransaction(nonce int64, to *Address, amount *BigInt, gasLimit int64, gasPrice *BigInt, data []byte) *Transaction {
+	return &Transaction{types.NewTransaction(uint64(nonce), to.address, amount.bigint, uint64(gasLimit), gasPrice.bigint, common.CopyBytes(data))}
+}
+
+func NewTransactionV2(nonce int64, to *Address, iamount string, gasLimit int64, gasPrice *BigInt, data []byte) *Transaction {
 	amount := ToWei(iamount, 18)
 	return &Transaction{types.NewTransaction(uint64(nonce), to.address, amount, uint64(gasLimit), gasPrice.bigint, common.CopyBytes(data))}
 }
